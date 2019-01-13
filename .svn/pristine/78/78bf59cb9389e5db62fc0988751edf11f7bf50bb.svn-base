@@ -1,0 +1,184 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="si.um.feri.praktikum.MovieDao"%>
+<%@page import="si.um.feri.praktikum.Movie"%>
+<%@page import="si.um.feri.praktikum.ShowDao"%>
+<%@page import="si.um.feri.praktikum.Show"%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Kolosej</title>
+	<meta charset="utf-8" >
+	<link rel="icon" href="http://dzyngiri.com/favicon.png" type="image/x-icon">
+	<link rel="stylesheet" href="css/bootstrap.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="responsive.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="style.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="css/touchTouch.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="css/kwicks-slider.css" type="text/css" media="screen">
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+	<script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/superfish.js"></script>
+	<script type="text/javascript" src="js/jquery.flexslider-min.js"></script>
+	<script type="text/javascript" src="js/jquery.kwicks-1.5.1.js"></script>
+	<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
+	<script type="text/javascript" src="js/jquery.cookie.js"></script>    
+	<script type="text/javascript" src="js/touchTouch.jquery.js"></script>
+	<script type="text/javascript">if($(window).width()>1024){document.write("<"+"script src='js/jquery.preloader.js'></"+"script>");}	</script>
+
+	<script>		
+		 jQuery(window).load(function() {	
+		 $x = $(window).width();		
+	if($x > 1024)
+	{			
+	jQuery("#content .row").preloader();    }	
+		 
+     jQuery('.magnifier').touchTouch();			
+    jQuery('.spinner').animate({'opacity':0},1000,'easeOutCubic',function (){jQuery(this).css('display','none')});	
+  		  }); 
+				
+	</script>
+
+	
+</head>
+<body>
+    <div class="spinner" style="left: -52px; top: -233px"></div> 
+<!-- header start -->
+<header>
+
+        <div style="background-color:rgb(150, 18, 18)" class="container clearfix">
+    <div style="background-color:rgb(150, 18, 18)" class="row">
+          <div class="span12">
+        <div class="navbar navbar_">
+              <div class="container">
+              <h1 class="brand brand_"><a href="index.jsp"><img alt="logo" src="img/logo.png" width="300px" height="100px"></a></h1>
+            <a class="btn btn-navbar btn-navbar_" data-toggle="collapse" data-target=".nav-collapse_">Menu <span class="icon-bar"></span> </a>
+            
+            <div class="nav-collapse nav-collapse_  collapse">
+              <ul class="nav sf-menu">
+                            <% if(session.getAttribute("email") != null) {
+                            if (((String) session.getAttribute("email")).compareTo("admin@kolosej.si")==0) {
+				%>
+					<li><a href="admin.jsp">Upravljaj</a></li>
+				<%} }%>
+                <li ><a href="index.jsp">Domov</a></li>
+              
+                <li ><a href="spored.jsp">Spored</a></li>
+				<li ><a href="vstopnice.jsp">Vstopnice</a></li>
+				<li class="active"><a href="filmi.jsp">Filmi</a></li>
+				<li ><a href="glasovanje.jsp">Glasovanje</a></li>
+				<li class="sub-menu" ><a>Info</a>
+				       <ul>
+                    <li><a href="oPodjetju.jsp">O podjetju</a></li>
+                    <li><a href="trzenje.jsp">Trženje</a></li>
+                    <li><a href="pravnaObvestila.jsp">Pravna obvestila</a></li>
+                    <li><a href="zaposlitev.jsp">Zaposlitev</a></li>
+                    <li><a href="cookies.jsp">Piškotki</a></li>
+                    <li><a href="http://www.arena.si/bowling/">Bowling</a></li>
+                    <li><a href="http://www.arena.si/biljard/">Biljard</a></li>
+                    <li><a href="http://www.casino-rio.si/">Casino</a></li>
+
+
+                  </ul>
+                    </li>
+
+				                    				<%
+				                    				if ((session.getAttribute("email") == null) || (((String) session.getAttribute("email")).compareTo("")==0)) {
+				                    					%>
+					<li><a href="prijava.jsp">Prijava</a></li>
+				<%} else { %>
+					<li><a href="logout.jsp">Odjava</a></li>
+				<%} %>          
+                
+              </ul>
+                </div>
+          </div>
+            </div>
+      </div>
+        </div>
+  </div>
+    </header>
+    
+    <% MovieDao od=new MovieDao(); %>
+    <% ShowDao sh=new ShowDao(); %>
+    <% //int hidden = Integer.parseInt(request.getParameter(o.getKolosejevID())); %>
+    
+    <% for (Movie o :od.select()) { %>
+    <% //int hidden = Integer.parseInt(request.getParameter(o.getKolosejevID())); %>
+    <% //if(hidden == o.getBazniID()){ %>
+    <% //Movie ret = od.select(hidden);%>
+    <% int id=Integer.parseInt(request.getParameter("poslji"));
+    //if (request.getParameter("poslji")!=null) {
+	//			int id=Integer.parseInt(request.getParameter("poslji"));
+				 
+	//		}
+    %>
+    <% if(id == o.getBazniID()){ %>
+    <div class="bg-content">
+		<div id="content" class="content-extra"><div class="ic"></div>
+    		<div class="container">
+       	    	<div class="row">
+        		<article class="span8">
+              		<h3><%=o.getTitle() %></h3>
+              		<h5><%=o.getOriginalTitle()%></h5>
+              			<div class="wrapper">
+            			<figure class="img-indent"><img src="<%=o.getPoster()%>" alt="" style="width:200px;height:270px;" ></figure>
+           			 		<div class="inner-1 overflow extra">
+                  				<div class="txt-1">
+                  				<br>
+                  				<%=o.getPlotOutline()%>
+                  				</div>
+                			</div>
+          				</div>
+          		<br>
+            	</article>
+        		<article class="span4">
+              		<h3>Informacije:</h3>
+                	<div class="wrapper">
+                    	<ul >
+                          <li><h5>Dolžina: <%=o.getDuration()%> minut</h5></li>
+                          <li><h5>Leto: <%=o.getYear()%></h5></li>
+                          <li><h5>Država: <%=o.getCountry()%></h5></li>
+                          <li><h5>Jezik: <%=o.getLanguage()%></h5></li>
+                          <li><h5>Scenarij: <%=o.getWriter()%></h5></li>
+                          <li><h5>Režija: <%=o.getDirector()%></h5></li>
+                          <li><h5>Igrajo: <%=o.getCast()%></h5></li>
+                          <li><h5>na voljo: <%=o.isNa_voljo()%></h5></li>
+                          
+                        </ul>
+                    </div>
+            	</article>
+     			</div>
+     			<div class="row">
+     			<article class="span8">
+     				
+     				<h3>Predstave filma:</h3>
+							<% int a = o.getBazniID(); %>
+							<ul class="portfolio clearfix">
+								
+								<% for (Show s:sh.selectShow()){ %>
+								<% int b = s.getMovieID(); %>
+									<% if(a == b){ %>
+									<li>
+										<p style="padding-bottom: 0px;">Mesto: <%=s.getCity() %></p>
+										<p style="padding-bottom: 0px;">Center: <%=s.getCenter() %></p>
+										<p style="padding-bottom: 0px;">Dvorana: <%=s.getTheater() %></p>
+										<p style="padding-bottom: 0px;">Datum: <%=s.getDate() %></p>
+										<p style="padding-bottom: 0px;">Čas: <%=s.getTime() %></p>
+									</li>
+									<% } %>
+								<% } %>
+							</ul>
+     				
+     		
+     				
+     				
+              		
+          		<br>
+            	</article>
+        		
+     			</div>
+        	</div>
+      	</div>
+      </div>
+      <% } %>
+      <% } %>
+<%@include file="footer.jsp"%>

@@ -1,0 +1,55 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="si.um.feri.praktikum.MovieDao"%>
+<%@page import="si.um.feri.praktikum.Movie"%>
+<%@page import="si.um.feri.praktikum.ShowDao"%>
+<%@page import="si.um.feri.praktikum.Show"%>
+<%@page import="si.um.feri.praktikum.Comment"%>
+<%@page import="si.um.feri.praktikum.CommentDao"%>
+<%@page import="si.um.feri.praktikum.User"%>
+<%@page import="si.um.feri.praktikum.UserDao"%>
+<%@page import="java.text.*" %>
+<%@include file="header.jsp"%>
+<div class="bg-content">
+		<!-- content -->
+		<div id="content">
+			<div class="ic"></div>
+			<div class="container">
+				<div class="row">
+						<div class="inner-1">
+<h4>Termin glasovanja</h4>
+<p>Glasovanj se zacne <time>10:00</time> vsak teden.</p>
+
+    
+<form action="/kino/Glasovalnik" method="post">					
+<table frame="above">
+  <tr>
+    <th>Filmi</th>
+    <th>Petek</th>
+    <th>Sobota</th>
+  </tr>
+  <tr>
+   <td><select>
+  <option id="title" value="title">Piratis-1</option>
+  <option id="title" value="title">Piratis-2</option>
+  <option id="title" value="title">Piratis-3</option>
+</select></td>
+  <td><input type="radio"  id="datum"  name="datum" value="datum">Pet_14:00<br> 
+  <input type="radio" id="datum" name="datum" value="datum">Pet_15:00<br> 
+  <input type="radio" id="datum" name="datum" value="datum">Pet_21:00<br> </td>
+
+	<td><input type="radio" id="datum" name="datum" value="datum">Sob_14:00<br> 
+	<input type="radio" id="datum" name="datum" value="datum">Sob_15:00<br> 
+	<input type="radio" id="datum" name="datum" value="datum">Sob_21:00<br> </td>
+
+</table>
+
+  <input type="submit" value="Glasuj">
+</form>
+
+						</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+<%@include file="footer.jsp"%>

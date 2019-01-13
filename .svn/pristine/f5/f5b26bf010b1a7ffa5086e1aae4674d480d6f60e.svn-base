@@ -1,0 +1,107 @@
+package kino_test;
+
+import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.sql.*;
+import org.w3c.dom.*;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.*;
+
+public class main {
+	public static void main(String[] args) {
+		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://svizec2.informatika.uni-mb.si:3306/s4p3_kino", "s4p3_kino", "v345qc");
+			Statement st = con.createStatement();
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			Document doc = db.parse(new URL("http://www.kolosej.si/spored/xml/2.0/").openStream());
+			NodeList listOfMovies = doc.getElementsByTagName("movie");
+			for (int i=0; i<listOfMovies.getLength(); i++) {
+				Node firstMovieNode = listOfMovies.item(i);
+			//	System.out.println(firstMovieNode.getAttributes().getNamedItem("id").getNodeValue()); //branje atributa id
+				if (firstMovieNode.getNodeType() == Node.ELEMENT_NODE) {
+					Element firstMovieElement = (Element) firstMovieNode;
+//					NodeList kolosejevIDList = firstMovieElement.getElementsByTagName("name");
+//					Element nameElement = (Element) kolosejevIDList.item(0);
+
+					//NodeList textFNList = nameElement.getChildNodes();
+					String kolosejevID = firstMovieNode.getAttributes().getNamedItem("id").getNodeValue();//				((Node) textFNList.item(0)).getNodeValue().trim();
+
+//		deluje			NodeList addressList = firstMovieElement.getElementsByTagName("address");
+//		deluje			Element addressElement = (Element) addressList.item(0);
+
+//		deluje			NodeList textLNList = addressElement.getChildNodes();
+//		deluje			String address = ((Node) textLNList.item(0)).getNodeValue().trim();
+					/*
+					String[] names = st.executeQuery(sql)
+					
+					System.out.println(textFNList.item(0));
+					for(int i=0; i<textFNList.getLength(); i++) {
+						if(textFNList.item(i).equals(st.executeQuery("select name from user")))
+						int j = st.executeUpdate("insert into movies(movie_id) values('" + kolosejevID + "','" + address + "')");*/
+					int j = st.executeUpdate("insert into movies(movie_id) values('" + kolosejevID + "')");
+				}
+			}
+			System.out.println("Data is successfully inserted!");
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ParserConfigurationException e) {
+			e.printStackTrace();
+		} catch (SAXException e) {
+			e.printStackTrace();
+		} catch (Exception err) {
+			System.out.println(" " + err.getMessage());
+		}
+		
+		
+		
+		
+		
+		/*
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/kino", "root", "F3RI");
+			Statement st = con.createStatement();
+			DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
+			Document doc = docBuilder.parse(new File("C:\\Users\\Denis Bobovnik\\Desktop\\filmi.xml"));
+			doc.getDocumentElement().normalize();
+			System.out.println("Root element of the doc is " + doc.getDocumentElement().getNodeName());
+			NodeList listOfPersons = doc.getElementsByTagName("employee");
+			for (int s = 0; s < listOfPersons.getLength(); s++) {
+				Node firstPersonNode = listOfPersons.item(s);
+				System.out.println(firstPersonNode.getAttributes().getNamedItem("id").getNodeValue()); //branje atributa id
+				if (firstPersonNode.getNodeType() == Node.ELEMENT_NODE) {
+					Element firstPersonElement = (Element) firstPersonNode;
+					NodeList nameList = firstPersonElement.getElementsByTagName("name");
+					Element nameElement = (Element) nameList.item(0);
+
+					NodeList textFNList = nameElement.getChildNodes();
+					String name = ((Node) textFNList.item(0)).getNodeValue().trim();
+
+					NodeList addressList = firstPersonElement.getElementsByTagName("address");
+					Element addressElement = (Element) addressList.item(0);
+
+					NodeList textLNList = addressElement.getChildNodes();
+					String address = ((Node) textLNList.item(0)).getNodeValue().trim();
+					*/
+				/*	String[] names = st.executeQuery(sql)
+					
+					System.out.println(textFNList.item(0));
+					for(int i=0; i<textFNList.getLength(); i++) {
+						if(textFNList.item(i).equals(st.executeQuery("select name from user")))
+					int i = st.executeUpdate("insert into user(name,address) values('" + name + "','" + address + "')");
+				}
+			}
+			System.out.println("Data is successfully inserted!");
+		} catch (Exception err) {
+			System.out.println(" " + err.getMessage());
+		}
+		*/
+	}
+}

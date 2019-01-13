@@ -1,0 +1,290 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="si.um.feri.praktikum.MovieDao"%>
+<%@page import="si.um.feri.praktikum.Movie"%>
+<%@page import="si.um.feri.praktikum.ShowDao"%>
+<%@page import="si.um.feri.praktikum.Show"%>
+<%@page import="si.um.feri.praktikum.Comment"%>
+<%@page import="si.um.feri.praktikum.CommentDao"%>
+<%@page import="si.um.feri.praktikum.User"%>
+<%@page import="si.um.feri.praktikum.UserDao"%>
+<%@page import="java.text.*" %>
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.ParseException"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@include file="header.jsp"%>
+    
+    
+    <% MovieDao od=new MovieDao(); %>
+    <% ShowDao sh=new ShowDao(); 
+       CommentDao cm=new CommentDao();
+       UserDao us=new UserDao();%>
+    <% //int hidden = Integer.parseInt(request.getParameter(o.getKolosejevID())); 
+    
+    if (request.getParameter("izbrisi")!=null) {
+				int id=Integer.parseInt(request.getParameter("izbrisi1"));
+				cm.deleteComment(id); 
+			}
+    
+    
+    
+    
+    
+    int user1 = 1;
+    
+    if (request.getParameter("vnosC")!=null) {
+    	for(User usr:us.selectUser()){
+    		if(usr.getEmail().compareTo(request.getParameter("email"))==0){
+    			user1 = usr.getUserID();
+    			
+    		}
+    	}
+
+    	
+    	cm.insertComment(new Comment(0,request.getParameter("comment"),Integer.parseInt(request.getParameter("movie")),user1));
+	}
+    
+    %>
+    
+    <% for (Movie o :od.selectMovie()) { %>
+    <% //int hidden = Integer.parseInt(request.getParameter(o.getKolosejevID())); %>
+    <% //if(hidden == o.getBazniID()){ %>
+    <% //Movie ret = od.select(hidden);%>
+    <% int id=Integer.parseInt(request.getParameter("poslji"));
+    //if (request.getParameter("poslji")!=null) {
+	//			int id=Integer.parseInt(request.getParameter("poslji"));
+				 
+	//		}
+    %>
+    <% if(id == o.getBazniID()){ %>
+    <div class="bg-content">
+		<div id="content" class="content-extra"><div class="ic"></div>
+    		<div class="container">
+       	    	<div class="row">
+        		<article class="span8">
+              		<h3><%=o.getTitle() %></h3>
+              		<h5><%=o.getOriginalTitle()%></h5>
+              	
+					<form name="star-rating" action="/kino/Ocenjevalnik" method="post">
+					<span class="rating">
+					    <input type="radio" value="5" class="rating-input"
+					           id="rating-input-1-5" name="rating-input-1" onchange="this.form.submit()">
+					    <label for="rating-input-1-5" class="rating-star"></label>
+					    <input type="radio" value="4" class="rating-input"
+					           id="rating-input-1-4" name="rating-input-1" onchange="this.form.submit()">
+					    <label for="rating-input-1-4" class="rating-star"></label>
+					    <input type="radio" value="3" class="rating-input"
+					           id="rating-input-1-3" name="rating-input-1" onchange="this.form.submit()">
+					    <label for="rating-input-1-3" class="rating-star"></label>
+					    <input type="radio" value="2" class="rating-input"
+					           id="rating-input-1-2" name="rating-input-1" onchange="this.form.submit()">
+					    <label for="rating-input-1-2" class="rating-star"></label>
+					    <input type="radio" value="1" class="rating-input"
+					           id="rating-input-1-1" name="rating-input-1" onchange="this.form.submit()">
+					    <label for="rating-input-1-1" class="rating-star"></label>
+					</span>
+					<input type="hidden" name="idFilma" value="<%=o.getBazniID()%>"/>
+					</form>
+					
+              		<% double num=o.getNumOfScores();
+					    		if(num==0) //prepreči deljenje z 0
+					    			num++;
+              		double sum=o.getSumOfScores();
+              		double povprecnaOcena = sum/num;
+					NumberFormat formatter = NumberFormat.getInstance(); 
+					formatter.setMaximumFractionDigits(1);	
+					formatter.setMinimumFractionDigits(1);	
+					%> 
+              		<h5><%=formatter.format(povprecnaOcena)%>/5</h5>
+              		
+              		<%String ocenili = "";
+						if(request.getAttribute("ocenili")!= null) {
+							ocenili = (String) request.getAttribute("ocenili");%>
+							<%=ocenili %>
+						<%}%>
+              		
+              		
+              		
+              		
+              		
+              			<div class="wrapper">
+            			<figure class="img-indent"><img src="<%=o.getPoster()%>" alt="" style="width:200px;height:270px;" ></figure>
+           			 		<div class="inner-1 overflow extra">
+                  				<div class="txt-1">
+                  				<br>
+                  				<%=o.getPlotOutline()%>
+                  				</div>
+                			</div>
+                			<br>
+                		<iframe style="padding:5px;" width="560" height="315" src="<%=o.getTrailer() %>" frameborder="0" allowfullscreen></iframe>
+                			
+                			
+          				</div>
+          		<br>
+            	
+     				
+     				<h3>Predstave filma:</h3>
+     					<form action="film.jsp?poslji=<%=o.getBazniID() %>" method="post">
+     					Izberi datum:&nbsp;&nbsp;<input type="date" name="showDate"><input class="btn btn-1" type="submit">
+     					</form>
+     				
+     				
+							<% int a = o.getBazniID(); %>
+							<ul class="portfolio clearfix">
+								
+								
+								
+								<% for (Show s:sh.selectShow()){ %>
+								<% int b = s.getMovieID(); %>
+									<%if(a == b){ %>
+									<%	if(request.getParameter("showDate")!=null){ %>
+									<%  String dare = request.getParameter("showDate");  	
+     				   					String startDateString = "06/27/2007";
+     				   					DateFormat df = new SimpleDateFormat("yyyy-MM-dd"); 
+     				   					Date startDate;
+     				   					Date ena = s.getDate();
+     				   					
+     				   					try {
+     				   					    startDate = df.parse(dare);
+     				   					    String newDateString = df.format(startDate);
+     				   					    %>
+     				   					    
+     				   					    <%if(s.getDate().compareTo(startDate)==0){ %>
+											<li>
+												<p style="padding-bottom: 0px;">Mesto: <%=s.getCity() %></p>
+												<p style="padding-bottom: 0px;">Center: <%=s.getCenter() %></p>
+												<p style="padding-bottom: 0px;">Dvorana: <%=s.getTheater() %></p>
+												<p style="padding-bottom: 0px;">Datum: <%=s.getDate() %></p>
+												<p style="padding-bottom: 0px;">Čas: <%=s.getTime() %></p>
+											</li>
+										<% } %>
+     				   					    
+     				   					<%    
+     				   					} catch (ParseException e) {
+     				   					    e.printStackTrace();
+     				   					}%>
+     				   				  <%}else{%>
+     				   				  		<li>
+												<p style="padding-bottom: 0px;">Mesto: <%=s.getCity() %></p>
+												<p style="padding-bottom: 0px;">Center: <%=s.getCenter() %></p>
+												<p style="padding-bottom: 0px;">Dvorana: <%=s.getTheater() %></p>
+												<p style="padding-bottom: 0px;">Datum: <%=s.getDate() %></p>
+												<p style="padding-bottom: 0px;">Čas: <%=s.getTime() %></p>
+											</li>
+     				   				  
+     				   				  
+     							 	  <%} %>
+									<%} %>
+									
+									
+									
+								<% } %>
+							<% //} %>
+							
+							</ul>
+     				
+     		
+     				
+     				
+              		
+          		<br>
+            	</article>
+            	<article class="span4">
+            	
+            	
+            	
+            	
+            	<h3>Informacije:</h3>
+                	<div class="wrapper">
+                    	<ul >
+                    	<%String voljo = "" + o.isNa_voljo();
+                    	String rez = "";
+                    		if(o.isNa_voljo()==true)
+                    			rez = "da";
+                    		else
+                    			rez = "ne";
+                    			%>
+                    	
+                          <li><h5>Dolžina: <%=o.getDuration()%> minut</h5></li>
+                          <li><h5>Leto: <%=o.getYear()%></h5></li>
+                          <li><h5>Država: <%=o.getCountry()%></h5></li>
+                          <li><h5>Jezik: <%=o.getLanguage()%></h5></li>
+                          <li><h5>Scenarij: <%=o.getWriter()%></h5></li>
+                          <li><h5>Režija: <%=o.getDirector()%></h5></li>
+                          <li><h5>Igrajo: <%=o.getCast()%></h5></li>
+                          <li><h5>Na voljo: <%=rez%></h5></li>
+                          
+                        </ul>
+                        <br />
+                        <form action="${pageContext.request.contextPath}/IzvoziVXML" method="post">
+							<input type="submit" class="btn btn-1" value="Izvozi v XML" />
+							<input type="hidden" name="idFilma" value="<%=o.getBazniID()%>"/>
+						</form>
+                    </div>
+            	
+            
+            	
+            	<% if ((session.getAttribute("email") == null) || ((String) session.getAttribute("email") == "")) {
+				%>
+            	<%}else{ %>
+            	<%String email = (String) session.getAttribute("email"); %>
+            	
+            	
+            	Komentar:<div class="buttons-wrapper">
+						<form action="film.jsp?poslji=<%=o.getBazniID() %>" method="post" id="usrform">
+						<textarea id="textarea" style="resize:none;" rows="4" cols="50" name="comment" form="usrform" maxlength="99"></textarea>
+						<div id="textarea_feedback"></div>
+						<input type="hidden" name="movie" value="<%=o.getBazniID()%>">
+						<input type="hidden" name="email" value="<%=(String) session.getAttribute("email")%>"><br>
+						<input class="btn btn-1" type="submit" name="vnosC" value="Shrani">
+						</form>
+            	 </div>
+            	
+            	
+            	<%} %>
+            	<% 
+            	for( Comment c:cm.selectComment()){%>
+            		<% if(o.getBazniID()==c.getMoviesID()){%>
+            			<% for(User u:us.selectUser()) {%>
+            				<%if(c.getUsersID()==u.getUserID()){ %>
+            				— <%=u.getFirst_name()%> <%=u.getLast_name()%><br><br>
+            				<% String vsebina = c.getContent();
+            					String parsedStr = vsebina.replaceAll("(.{40})", "$1\n");%>
+            					     <c:set var = "parsedStr1" value = "<%=parsedStr %>"/>
+     									${fn:escapeXml(parsedStr1)}
+
+            				<% int user2=0;
+            				if(session.getAttribute("email")!=null) {
+            		    		if(u.getEmail().compareTo((String) session.getAttribute("email"))==0){
+            		    			user2 = u.getUserID();
+            		    		}
+            				}
+            		    	//System.out.print(user2);
+            				if((c.getUsersID()==user2)||(u.getEmail().compareTo("admin@kolosej.si")==0)){
+            				
+            				%>
+            				<div class="buttons-wrapper">
+            				<form action="film.jsp?poslji=<%=o.getBazniID() %>" method="post" id="usrform2"><br>
+            				<input class="btn btn-1" type="hidden" name="izbrisi1" value="<%=c.getCommentID()%>">
+            				<%if ((session.getAttribute("email") != null)) {
+            						if((((String) session.getAttribute("email")).compareTo("")!=0)&&((((String) session.getAttribute("email")).compareTo("admin@kolosej.si")==0)||(((String) session.getAttribute("email")).compareTo(u.getEmail())==0))) {%><input class="btn btn-1" type="submit" name="izbrisi" value="Briši"><%}} %>
+            				</form>
+            				</div> 
+            				<%}%>
+            				<hr>
+            				<%}%>
+            			<%}%>
+            		<%}%>
+            		
+            	<%}%>
+            	</article>
+        		
+     			</div>
+        	</div>
+      	</div>
+      </div>
+      <% } %>
+      <% } %>
+<%@include file="footer.jsp"%>

@@ -1,0 +1,178 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@include file="header.jsp"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="si.um.feri.praktikum.*"%>
+<%@page import="java.text.*" %>
+<%@page import="java.sql.ResultSet" %>
+<%@page import="java.sql.Connection" %>
+<%@page import="java.sql.DriverManager" %>
+<%@page import="java.sql.PreparedStatement" %>
+<%@page import="java.util.HashMap" %>
+
+                          
+                          <% if(session.getAttribute("email") != null) {
+                            if (((String) session.getAttribute("email")).compareTo("admin@kolosej.si")==0) {
+				%>
+				
+
+	<div class="bg-content">
+		<!-- content -->
+		<div id="content">
+			<div class="ic"></div>
+			<div class="container">
+				<div class="row">
+				
+
+						<div class="inner-1">
+						
+
+						
+			
+	<form action="${pageContext.request.contextPath}/Posodobitev" method="post">
+		<center>
+			<br /><input type="submit" class="btn btn-1" value="Osveži bazo" />
+		</center>
+	</form>
+	
+							<%String cas = "";
+						if(request.getAttribute("cas")!= null) {
+							cas = (String) request.getAttribute("cas");%>
+							<br /><center>Nazadnje posodobljeno: <%=cas %></center>
+						<%}%>
+
+
+		<form method="post" action="" style="text-align: center">
+		<h3>Vnos filma</h3>
+		<fieldset>
+		<div>
+			<label class="name">
+				<input type="text" name="MovieID" value="" placeholder="MovieID">
+			
+		
+			
+				<input type="text" name="Title" value="" placeholder="Title">
+			
+		
+				
+			
+				<input type="text" name="Original_Title" value="" placeholder="Original_Title">
+			
+		
+			
+				<input type="text" name="Punchline" value="" placeholder="Punchline">
+			</label>
+		</div>
+				<div>
+			<label class="name">
+				<input type="text" name="Genre" value="" placeholder="Genre">
+
+				<input type="text" name="Year" value="" placeholder="Year">
+
+				<input type="text" name="Duration" value="" placeholder="Duration">
+
+				<input type="text" name="Url" value="" placeholder="Url">
+			</label>
+		</div>
+				<div>
+			<label class="name">
+				<input type="text" name="Poster" value="" placeholder="Poster">
+
+				<input type="text" name="Director" value="" placeholder="Director">
+
+				<input type="text" name="Producer" value="" placeholder="Producer">
+
+				<input type="text" name="Writer" value="" placeholder="Writer">
+			</label>
+		</div>
+				<div>
+			<label class="name">
+				<input type="text" name="Cast" value="" placeholder="Cast">
+
+				<input type="text" name="Distributor" value="" placeholder="Distributor">
+
+				<input type="text" name="Language" value="" placeholder="Language">
+
+				<input type="text" name="Country" value="" placeholder="Country">
+			</label>
+		</div>
+				<div>
+			<label class="name">
+				<input type="text" name="Localization" value="" placeholder="Localization">
+
+				<input type="text" name="Plot_Outline" value="" placeholder="Plot_Outline">
+
+				<input type="text" name="Sum_of_Scores" value="" placeholder="Sum_of_Scores">
+
+				<input type="text" name="Num_of_Scores" value="" placeholder="Num_of_Scores">
+			</label>
+		</div>
+		<div class="buttons-wrapper">
+			<input type="submit" class="btn btn-1" value="Vnesi" />
+		</div>	
+		</fieldset>
+	</form>	
+	
+	<form method="post" action="vote.jsp" style="text-align: center">
+		<h3>Izbira filmov za glasovanje</h3>
+		<fieldset>
+					<div>
+			<label class="name">
+				
+  <% MovieDao od=new MovieDao(); %>
+  
+   <select name="vote_film1" <% for (Movie o :od.selectMovie()) { %> > 
+  
+  <option value="<%=o.getBazniID() %>"><%=o.getTitle() %></option> 
+
+    <% } %> 
+</select>
+  
+  
+   <select  name="vote_film2" <% for (Movie o :od.selectMovie()) { %>> 
+  
+  <option   value="<%=o.getBazniID() %>"><%=o.getTitle() %></option> 
+
+    <% } %> 
+</select>
+  
+  
+   <select name="vote_film3" <% for (Movie o :od.selectMovie()) { %>> 
+  
+  <option value="<%=o.getBazniID() %>"><%=o.getTitle() %></option> 
+
+    <% } %> 
+</select>
+
+				
+
+			
+			
+			</label>
+		</div>
+			<div class="buttons-wrapper">
+			<input type="submit" class="btn btn-1" value="Dodaj" />
+			
+		</div>	
+		</fieldset>
+		</form>
+
+
+						</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	<%}
+                            else {                 
+                    			out.println("<script type=\"text/javascript\">");
+                    			out.println("alert('Za dostop do strani morate biti administrator!');");
+                    			out.println("location='index.jsp';");
+                    			out.println("</script>");
+                            }
+     } 
+	 else
+		request.getRequestDispatcher("/prijava.jsp").forward(request, response);
+				%>
+	
+<%@include file="footer.jsp"%>

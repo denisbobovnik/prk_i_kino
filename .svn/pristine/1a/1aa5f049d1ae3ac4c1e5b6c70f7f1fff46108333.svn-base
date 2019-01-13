@@ -1,0 +1,18 @@
+<%@ page import ="java.sql.*" %>
+<%
+    String userid = request.getParameter("uname");    
+    String pwd = request.getParameter("pass");
+    Class.forName("com.mysql.jdbc.Driver");
+    Connection con = DriverManager.getConnection("jdbc:mysql://svizec2.informatika.uni-mb.si:3306/s4p3_kino?autoReconnect=true&useSSL=false", "s4p3_kino", "v345qc");
+    Statement st = con.createStatement();
+    ResultSet rs;
+    rs = st.executeQuery("select * from members where uname='" + userid + "' and pass='" + pwd + "'");
+    if (rs.next()) {
+        session.setAttribute("userid", userid);
+        //out.println("welcome " + userid);
+        //out.println("<a href='logout.jsp'>Log out</a>");
+        response.sendRedirect("success.jsp");
+    } else {
+        out.println("Nepravilno geslo! <a href='index.jsp'>Poskusite ponovno.</a>");
+    }
+%>

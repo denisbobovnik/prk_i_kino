@@ -1,0 +1,42 @@
+package si.um.feri.praktikum;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+import javax.naming.InitialContext;
+import javax.servlet.http.Cookie;
+import javax.sql.DataSource;
+
+public class GlasovanjeDao {
+
+	private Connection getConnection() {
+		try {
+			DataSource ds = (DataSource) new InitialContext().lookup("java:comp/env/jdbc/praktikum");
+			return ds.getConnection();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	
+	String ime = ...;
+	Cookie cookie = new Cookie("public_name", ime); 
+	response.addCookie( cookie);
+	
+	cookie.setMaxAge( 60*60*24 );		// 1 dan
+	response.addCookie( cookie );
+
+	Cookie[] piskoti = request.getCookies();
+
+	for (int i=0; i<piskoti.length; ++i) {
+		Cookie cookie = piskoti[i];
+		if (cookie.getName().equals("public_name")) {
+			String ime = cookie.getValue();
+			out.println("Zdravo, " + ime);
+			break;
+	}
+	}
+
+}

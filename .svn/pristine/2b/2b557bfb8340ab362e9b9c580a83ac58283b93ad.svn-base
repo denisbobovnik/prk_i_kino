@@ -1,0 +1,124 @@
+
+package si.um.feri.praktikum;
+
+
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+
+public class MovieDao {
+
+	/*
+	 * Podatkovna baza:
+	 * create database ost;
+	 * use ost;
+	 * 
+	 * Podatkovna tabela:
+	 * create table oseba(id int auto_increment, ime varchar(255), priimek varchar(255), primary key (id));
+	 * */
+	
+	private Connection getConnection() {
+		try {
+			DataSource ds = (DataSource) new InitialContext().lookup("java:comp/env/jdbc/praktikum");
+			return ds.getConnection();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public List<Movie> select() throws Exception {
+		List<Movie> ret=new ArrayList<Movie>();
+		Connection conn=getConnection();
+		try {
+			
+			ResultSet rs=conn.createStatement().executeQuery("select * from movies");
+			while (rs.next()) {
+				Movie o=new Movie(rs.getInt("movies_id"),rs.getString("movie_id"),rs.getString("title"),rs.getString("original_title"),rs.getString("punchline"),rs.getString("genre"),rs.getInt("year"),rs.getInt("duration"),rs.getString("url"),rs.getString("poster"),rs.getString("director"),rs.getString("producer"),rs.getString("writer"),rs.getString("cast"), rs.getString("distributor"),rs.getString("language"),rs.getString("country"),rs.getString("localization"),rs.getString("plot_outline"),rs.getDouble("sum_of_scores"),rs.getDouble("num_of_scores"),rs.getBoolean("na_voljo"));
+				//Movie o=new Movie(rs.getInt("movies_id"),rs.getString("movie_id"),rs.getString("title"),rs.getString("originalTitle"),rs.getString("punchline"),rs.getString("genre"),rs.getInt("year"),rs.getInt("duration"),rs.getString("url"),rs.getString("poster"),rs.getString("director"),rs.getString("producer"),rs.getString("writer"),rs.getString("cast"), rs.getString("distributor"),rs.getString("language"),rs.getString("country"),rs.getString("localization"),rs.getDouble("sum_of_scores"),rs.getDouble("num_of_scores"),rs.getBoolean("na_voljo"));
+				
+				ret.add(o);
+			}
+			rs.close();
+			
+		} finally {
+			conn.close();
+		}
+		return ret;
+	}
+	
+	public Movie select(int id) throws Exception {
+		Movie ret=null;
+		Connection conn=getConnection();
+		try {
+			
+			PreparedStatement ps=conn.prepareStatement("select * from movies where id=?");
+			ps.setInt(1, id);
+			ResultSet rs=ps.executeQuery();
+			while (rs.next()) {
+				ret=new Movie(rs.getInt("movies_id"),rs.getString("movie_id"),rs.getString("title"),rs.getString("originalTitle"),rs.getString("punchline"),rs.getString("genre"),rs.getInt("year"),rs.getInt("duration"),rs.getString("url"),rs.getString("poster"),rs.getString("director"),rs.getString("producer"),rs.getString("writer"),rs.getString("cast"), rs.getString("distributor"),rs.getString("language"),rs.getString("country"),rs.getString("localization"),rs.getString("plot_outline"),rs.getDouble("sum_of_scores"),rs.getDouble("num_of_scores"),rs.getBoolean("na_voljo"));
+				break;
+			}
+			rs.close();
+			
+		} finally {
+			conn.close();
+		}
+		return ret;
+	}
+	
+	public void delete(int id) throws Exception {
+		Connection conn=getConnection();
+		try {
+
+			PreparedStatement ps=conn.prepareStatement("delete from movies where movies_id=?");
+			ps.setInt(1, id);
+			ps.executeUpdate();
+
+		} finally {
+			conn.close();
+		}
+	}
+	
+	public void insert(Movie o) throws Exception {
+		Connection conn=getConnection();
+		try {
+
+			PreparedStatement ps=conn.prepareStatement("insert into movies(movies_id , movie_id , title , original_title, punchline, genre, year, duration, url, poster, director, producer, writer, cast, distributor, language, country, localization, plot_outline, sum_of_scores, num_of_scores, na_voljo) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			ps.setInt(1, o.getBazniID());
+			ps.setString(2, o.getKolosejevID());
+			ps.setString(3, o.getTitle());
+			ps.setString(4, o.getOriginalTitle());
+			ps.setString(5, o.getPunchline());
+			ps.setString(6, o.getGenre());
+			ps.setInt(7, o.getYear());
+			ps.setInt(8, o.getDuration());
+			ps.setString(9, o.getUrl());
+			ps.setString(10, o.getPoster());
+			ps.setString(11, o.getDirector());
+			ps.setString(12, o.getProducer());
+			ps.setString(13, o.getWriter());
+			ps.setString(14, o.getCast());
+			ps.setString(15, o.getDistributor());
+			ps.setString(16, o.getLanguage());
+			ps.setString(17, o.getCountry());
+			ps.setString(18, o.getLocalization());
+			ps.setString(19, o.getPlotOutline());
+			ps.setDouble(20, o.getSumOfScores());
+			ps.setDouble(21, o.getNumOfScores());
+			ps.setBoolean(22, o.isNa_voljo());
+			
+			ps.executeUpdate();
+
+		} finally {
+			if(conn!=null)
+			conn.close();
+		}
+	}
+	
+}

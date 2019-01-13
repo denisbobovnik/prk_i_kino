@@ -1,0 +1,110 @@
+/* to je za ustvarjanje in runnanje baze 
+create database `praktikum-kino`;
+use `praktikum-kino`;*/
+SET FOREIGN_KEY_CHECKS=0;
+DROP TABLE movies CASCADE;
+DROP TABLE shows CASCADE;
+DROP TABLE ticket_price_list CASCADE;
+DROP TABLE users CASCADE;
+DROP TABLE comments CASCADE;
+DROP TABLE voting CASCADE;
+DROP TABLE members CASCADE;
+SET FOREIGN_KEY_CHECKS=1;
+
+CREATE TABLE movies (
+  `movies_id` INT auto_increment,
+  `movie_id` VARCHAR(18),
+  `title` VARCHAR(100),
+  `original_title` VARCHAR(100),
+  `punchline` VARCHAR(250),
+  `genre` VARCHAR(60),
+  `year` INT,
+  `duration` INT,
+  `url` VARCHAR(150),
+  `poster` VARCHAR(150),
+  `director` VARCHAR(45),
+  `producer` VARCHAR(45),
+  `writer` VARCHAR(100),
+  `cast` VARCHAR(500),
+  `distributor` VARCHAR(45),
+  `language` VARCHAR(45),
+  `country` VARCHAR(100),
+  `localization` VARCHAR(45),
+  `plot_outline` VARCHAR(1000),
+  `sum_of_scores` DOUBLE,
+  `num_of_scores` DOUBLE,
+  `na_voljo` boolean,
+  PRIMARY KEY (`movies_id`));
+  
+  CREATE TABLE shows (
+  `shows_id` INT auto_increment,
+  `show_id` VARCHAR(18),
+  `date_time` datetime,
+  `city` VARCHAR(45),
+  `center` VARCHAR(45),
+  `theater` VARCHAR(45),
+  `movies_movie_id` int,
+  PRIMARY KEY (`shows_id`));
+  
+ALTER TABLE shows
+ADD CONSTRAINT fk_shows_movies FOREIGN KEY
+(`movies_movie_id`) REFERENCES movies(`movies_id`);
+
+CREATE TABLE `ticket_price_list` (
+  `ticket_price_list_id` INT NOT NULL,
+  `price` DOUBLE NOT NULL,
+  `shows_shows_id` INT NOT NULL,
+  PRIMARY KEY (`ticket_price_list_id`));
+
+ALTER TABLE ticket_price_list
+	ADD CONSTRAINT fk_ticket_price_list_shows foreign key
+    (shows_shows_id) references shows(shows_id);
+    
+CREATE TABLE `users` (
+  `user_id` INT NOT NULL,
+  `username` VARCHAR(45) NOT NULL,
+  `name` VARCHAR(45) NOT NULL,
+  `surname` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(45) NOT NULL,
+  `phone` VARCHAR(45) NULL,
+  `password` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`user_id`));
+
+CREATE TABLE `comments` (
+  `comment_id` INT NOT NULL,
+  `content` VARCHAR(100) NOT NULL,
+  `movies_movie_id` INT NOT NULL,
+  `users_user_id` INT NOT NULL,
+  PRIMARY KEY (`comment_id`));
+
+ALTER TABLE comments
+	ADD CONSTRAINT fk_comments_movies foreign key
+    (movies_movie_id) references movies(movies_id);
+
+ALTER TABLE comments
+	ADD CONSTRAINT fk_comments_users foreign key
+    (users_user_id) references users(user_id);
+    
+CREATE TABLE `voting` (
+  `voting_id` INT NOT NULL,
+  `start_date` DATETIME NOT NULL,
+  `end_date` DATETIME NOT NULL,
+  `num_of_votes` INT NOT NULL,
+  `date` DATETIME NOT NULL,
+  `movies_movies_id` INT NOT NULL,
+  PRIMARY KEY (`voting_id`));
+
+ALTER TABLE voting
+	ADD CONSTRAINT fk_voting_movies foreign key
+    (movies_movies_id) references movies(movies_id);
+
+CREATE TABLE `members` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `first_name` varchar(45) NOT NULL,
+  `last_name` varchar(45) NOT NULL,
+  `email` varchar(45) NOT NULL,
+  `uname` varchar(45) NOT NULL,
+  `pass` varchar(45) NOT NULL,
+  `regdate` date NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;

@@ -1,0 +1,80 @@
+SET FOREIGN_KEY_CHECKS=0;
+/* to je za ustvarjanje in runnanje baze 
+create database `praktikum-kino`;
+use `praktikum-kino`;
+*/
+
+CREATE TABLE `praktikum-kino`.`movies` (
+  `movies_id` INT NOT NULL,
+  `movie_id` VARCHAR(18) NOT NULL,
+  `title` VARCHAR(100) NOT NULL,
+  `original_title` VARCHAR(100) NOT NULL,
+  `punchline` VARCHAR(45) NULL,
+  `genre` VARCHAR(60) NOT NULL,
+  `year` INT NOT NULL,
+  `duration` INT NOT NULL,
+  `url` VARCHAR(150) NOT NULL,
+  `poster` VARCHAR(150) NOT NULL,
+  `director` VARCHAR(45) NOT NULL,
+  `producer` VARCHAR(45) NULL,
+  `writer` VARCHAR(45) NOT NULL,
+  `cast` VARCHAR(500) NOT NULL,
+  `distributor` VARCHAR(45) NOT NULL,
+  `language` VARCHAR(20) NOT NULL,
+  `country` VARCHAR(10) NOT NULL,
+  `localization` VARCHAR(45) NOT NULL,
+  `plot_outline` VARCHAR(800) NOT NULL,
+  `sum_of_scores` DOUBLE NOT NULL,
+  `num_of_scores` DOUBLE NOT NULL,
+  PRIMARY KEY (`movie_id`));
+
+CREATE TABLE `praktikum-kino`.`shows` (
+  `show_id` VARCHAR(18) NOT NULL,
+  `date` DATE NOT NULL,
+  `time` DATETIME NOT NULL,
+  `city` VARCHAR(45) NOT NULL,
+  `center` VARCHAR(45) NOT NULL,
+  `theater` VARCHAR(45) NOT NULL,
+  `movies_movie_id` VARCHAR(18) NOT NULL,
+  PRIMARY KEY (`show_id`));
+  
+ALTER TABLE shows
+	ADD CONSTRAINT fk_shows_movies FOREIGN KEY
+	(movies_movie_id) REFERENCES movies(movie_id);
+    
+CREATE TABLE `praktikum-kino`.`ticket_price_list` (
+  `ticket_price_list_id` INT NOT NULL,
+  `price` DOUBLE NOT NULL,
+  `shows_show_id` VARCHAR(18) NOT NULL,
+  PRIMARY KEY (`ticket_price_list_id`));
+
+ALTER TABLE ticket_price_list
+	ADD CONSTRAINT fk_ticket_price_list_shows foreign key
+    (shows_show_id) references shows(show_id);
+    
+CREATE TABLE `praktikum-kino`.`users` (
+  `user_id` INT NOT NULL,
+  `username` VARCHAR(45) NOT NULL,
+  `name` VARCHAR(45) NOT NULL,
+  `surname` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(45) NOT NULL,
+  `phone` VARCHAR(45) NULL,
+  `password` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`user_id`));
+
+CREATE TABLE `praktikum-kino`.`comments` (
+  `comment_id` INT NOT NULL,
+  `content` VARCHAR(100) NOT NULL,
+  `movies_movie_id` VARCHAR(45) NOT NULL,
+  `users_user_id` INT NOT NULL,
+  PRIMARY KEY (`comment_id`));
+
+ALTER TABLE comments
+	ADD CONSTRAINT fk_comments_movies foreign key
+    (movies_movie_id) references movies(movie_id);
+
+ALTER TABLE comments
+	ADD CONSTRAINT fk_comments_users foreign key
+    (users_user_id) references users(user_id);
+  
+SET FOREIGN_KEY_CHECKS=1;

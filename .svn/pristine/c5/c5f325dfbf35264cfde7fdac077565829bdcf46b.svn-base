@@ -1,0 +1,61 @@
+package si.um.feri.praktikum;
+
+import java.io.IOException;
+import java.util.Date;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet(urlPatterns="/Glasovalnik")
+public class Glasovalnik extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+ 
+    public Glasovalnik() {
+        super();
+       
+    }
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int IDbaza = Integer.parseInt(request.getParameter("idFilma"));
+		String film = request.getParameter("title");
+		
+		try{
+		    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
+		    Date parsedDate = dateFormat.parse(request.getParameter("datum"));
+		    Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
+		}catch(Exception e){
+		}
+		Cookie[] piskotki = request.getCookies();
+		int flag = 0, vr;
+		for(int i=0; i<piskotki.length; i++) {
+			try {
+			    vr = Integer.parseInt(piskotki[i].getValue());
+			} catch (NumberFormatException e) {
+			    vr = -1;
+			}
+			if(vr==IDbaza) {
+				flag++;
+			}
+		}
+		if(flag == 0) {
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://svizec2.informatika.uni-mb.si:3306/s4p3_kino?autoReconnect=true&useSSL=false", "s4p3_kino", "v345qc");
+			PreparedStatement stevilo = con.prepareStatement("select num_of_scores from movies where movies_id = ?");
+			stevilo.setInt(1, IDbaza);
+			PreparedStatement sestevek = con.prepareStatement("select sum_of_scores from movies where movies_id = ?");
+			sestevek.setInt(1, IDbaza);
+		}
+		
+
+	}
+}

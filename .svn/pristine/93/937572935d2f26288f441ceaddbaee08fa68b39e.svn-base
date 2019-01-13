@@ -1,0 +1,205 @@
+package kino_test;
+
+import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.sql.*;
+import org.w3c.dom.*;
+import org.xml.sax.SAXException;
+import javax.xml.parsers.*;
+
+public class main {
+	public static void main(String[] args) {
+		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection con = DriverManager.getConnection(
+					"jdbc:mysql://svizec2.informatika.uni-mb.si:3306/s4p3_kino?autoReconnect=true&useSSL=false",
+					"s4p3_kino", "v345qc");
+			Statement st = con.createStatement();
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			Document doc = db.parse(new URL("http://www.kolosej.si/spored/xml/2.0/").openStream());
+			NodeList listOfMovies = doc.getElementsByTagName("movie");
+			String punchline, poster, producer, cast, language, country;
+			for (int i = 0; i < listOfMovies.getLength(); i++) {
+				Node firstMovieNode = listOfMovies.item(i);
+				if (firstMovieNode.getNodeType() == Node.ELEMENT_NODE) {
+					Element firstMovieElement = (Element) firstMovieNode;
+					String kolosejevID = firstMovieNode.getAttributes().getNamedItem("id").getNodeValue();
+
+					NodeList titleList = firstMovieElement.getElementsByTagName("title");
+					Element titleElement = (Element) titleList.item(0);
+					NodeList textLNList = titleElement.getChildNodes();
+					String title = ((Node) textLNList.item(0)).getNodeValue().trim();
+					String titlePretvorba = title.replace("'", "''");
+
+					NodeList originalTitleList = firstMovieElement.getElementsByTagName("original_title");
+					Element originalTitleElement = (Element) originalTitleList.item(0);
+					NodeList textOTList = originalTitleElement.getChildNodes();
+					String originalTitle = ((Node) textOTList.item(0)).getNodeValue().trim();
+					String originalTitlePretvorba = originalTitle.replace("'", "''");
+
+					NodeList punchlineList = firstMovieElement.getElementsByTagName("punchline");
+					Element punchlineElement = (Element) punchlineList.item(0);
+					NodeList textPLList = punchlineElement.getChildNodes();
+					Text itemCheckedText = (Text) textPLList.item(0);
+					if (itemCheckedText == null) {
+						Document doc2 = punchlineElement.getOwnerDocument();
+						itemCheckedText = doc2.createTextNode("punchline");
+						punchlineElement.appendChild(itemCheckedText);
+						itemCheckedText.setTextContent("");
+					}
+					punchline = itemCheckedText.getWholeText();
+
+					NodeList genreList = firstMovieElement.getElementsByTagName("genre");
+					Element genreElement = (Element) genreList.item(0);
+					NodeList textGList = genreElement.getChildNodes();
+					String genre = ((Node) textGList.item(0)).getNodeValue().trim();
+					String genrePretvorba = genre.replace("'", "''");
+
+					NodeList yearList = firstMovieElement.getElementsByTagName("year");
+					Element yearElement = (Element) yearList.item(0);
+					NodeList textYList = yearElement.getChildNodes();
+					int year = Integer.parseInt(((Node) textYList.item(0)).getNodeValue().trim());
+
+					NodeList durationList = firstMovieElement.getElementsByTagName("duration");
+					Element durationElement = (Element) durationList.item(0);
+					NodeList textDList = durationElement.getChildNodes();
+					int duration = Integer.parseInt(((Node) textDList.item(0)).getNodeValue().trim());
+
+					NodeList urlList = firstMovieElement.getElementsByTagName("url");
+					Element urlElement = (Element) urlList.item(0);
+					NodeList textURLList = urlElement.getChildNodes();
+					String url = ((Node) textURLList.item(0)).getNodeValue().trim();
+
+					NodeList posterList = firstMovieElement.getElementsByTagName("poster");
+					if (posterList.getLength() != 0) {
+						Element posterElement = (Element) posterList.item(0);
+						NodeList textPOSTList = posterElement.getChildNodes();
+						poster = ((Node) textPOSTList.item(0)).getNodeValue().trim();
+					} else
+						poster = "";
+
+					NodeList directorList = firstMovieElement.getElementsByTagName("director");
+					Element directorElement = (Element) directorList.item(0);
+					NodeList textDIRList = directorElement.getChildNodes();
+					String director = ((Node) textDIRList.item(0)).getNodeValue().trim();
+					String directorPretvorba = director.replace("'", "''");
+
+					NodeList producerList = firstMovieElement.getElementsByTagName("producer");
+					Element producerElement = (Element) producerList.item(0);
+					NodeList textPRODList = producerElement.getChildNodes();
+					Text producerCheckedText = (Text) textPRODList.item(0);
+					if (producerCheckedText == null) {
+						Document doc3 = producerElement.getOwnerDocument();
+						producerCheckedText = doc3.createTextNode("producer");
+						producerElement.appendChild(producerCheckedText);
+						producerCheckedText.setTextContent("");
+					}
+					producer = producerCheckedText.getWholeText();
+
+					NodeList writerList = firstMovieElement.getElementsByTagName("writer");
+					Element writerElement = (Element) writerList.item(0);
+					NodeList textWRITList = writerElement.getChildNodes();
+					String writer = ((Node) textWRITList.item(0)).getNodeValue().trim();
+					String writerPretvorba = writer.replace("'", "''");
+
+					NodeList castList = firstMovieElement.getElementsByTagName("cast");
+					Element castElement = (Element) castList.item(0);
+					NodeList textCASTList = castElement.getChildNodes();
+					Text castCheckedText = (Text) textCASTList.item(0);
+					if (castCheckedText == null) {
+						Document doc4 = castElement.getOwnerDocument();
+						castCheckedText = doc4.createTextNode("cast");
+						castElement.appendChild(castCheckedText);
+						castCheckedText.setTextContent("");
+					}
+					cast = castCheckedText.getWholeText();
+					String castPretvorba = cast.replace("'", "''");
+
+					NodeList distributorList = firstMovieElement.getElementsByTagName("distributor");
+					Element distributorElement = (Element) distributorList.item(0);
+					NodeList textDISTRList = distributorElement.getChildNodes();
+					String distributor = ((Node) textDISTRList.item(0)).getNodeValue().trim();
+					String distributorPretvorba = distributor.replace("'", "''");
+
+					NodeList languageList = firstMovieElement.getElementsByTagName("language");
+					Element languageElement = (Element) languageList.item(0);
+					NodeList textLANGList = languageElement.getChildNodes();
+					Text languageCheckedText = (Text) textLANGList.item(0);
+					if (languageCheckedText == null) {
+						Document doc5 = languageElement.getOwnerDocument();
+						languageCheckedText = doc5.createTextNode("language");
+						languageElement.appendChild(languageCheckedText);
+						languageCheckedText.setTextContent("");
+					}
+					language = languageCheckedText.getWholeText();
+					String languagePretvorba = language.replace("'", "''");
+
+					NodeList countryList = firstMovieElement.getElementsByTagName("country");
+					Element countryElement = (Element) countryList.item(0);
+					NodeList textCOUNTRYList = countryElement.getChildNodes();
+					Text countryCheckedText = (Text) textCOUNTRYList.item(0);
+					if (countryCheckedText == null) {
+						Document doc6 = countryElement.getOwnerDocument();
+						countryCheckedText = doc6.createTextNode("country");
+						countryElement.appendChild(countryCheckedText);
+						countryCheckedText.setTextContent("");
+					}
+					country = countryCheckedText.getWholeText();
+					String countryPretvorba = country.replace("'", "''");
+
+					NodeList localizationList = firstMovieElement.getElementsByTagName("localization");
+					Element localizationElement = (Element) localizationList.item(0);
+					NodeList textLOCALList = localizationElement.getChildNodes();
+					String localization = ((Node) textLOCALList.item(0)).getNodeValue().trim();
+					String localizationPretvorba = localization.replace("'", "''");
+
+					NodeList plotList = firstMovieElement.getElementsByTagName("plot_outline");
+					Element plotElement = (Element) plotList.item(0);
+					NodeList textPLOTList = plotElement.getChildNodes();
+					String plot = ((Node) textPLOTList.item(0)).getNodeValue().trim();
+					String plotPretvorba = plot.replace("'", "''");
+
+					int j = st.executeUpdate(
+							"insert into movies(movie_id, title, original_title, punchline, genre, year, duration, url, poster, director, producer, writer, cast, distributor, language, country, localization, plot_outline) values('"
+									+ kolosejevID + "','" + titlePretvorba + "','" + originalTitlePretvorba + "','"
+									+ punchline + "','" + genrePretvorba + "','" + year + "','" + duration + "','" + url
+									+ "','" + poster + "','" + directorPretvorba + "','" + producer + "','"
+									+ writerPretvorba + "','" + castPretvorba + "','" + distributorPretvorba + "','"
+									+ languagePretvorba + "','" + countryPretvorba + "','" + localizationPretvorba
+									+ "','" + plotPretvorba + "')");
+					
+					NodeList listOfShows = firstMovieElement.getElementsByTagName("show");
+					for (int k=0; k<listOfShows.getLength(); k++) {
+						Node firstShowNode = listOfShows.item(k);
+						if (firstShowNode.getNodeType() == Node.ELEMENT_NODE) {
+							Element firstShowElement = (Element) firstShowNode;
+							String kolosejevIDshowa = firstShowNode.getAttributes().getNamedItem("id").getNodeValue();
+							//System.out.println(kolosejevIDshowa);
+						}
+					}
+					/*
+					ResultSet trenutniFilm = st.executeQuery("select movies_id from movies where movie_id = '" + kolosejevID + "'");
+					int atribut;
+					while(trenutniFilm.next()) {
+						atribut = trenutniFilm.getInt(atribut);
+						System.out.println(trenutniFilm.getInt(1));
+					}
+					 */
+				}
+			}
+			System.out.println("Podatki so uspešno preneseni v bazo!");
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ParserConfigurationException e) {
+			e.printStackTrace();
+		} catch (SAXException e) {
+			e.printStackTrace();
+		} catch (Exception err) {
+			System.out.println(" " + err.getMessage());
+		}
+	}
+}

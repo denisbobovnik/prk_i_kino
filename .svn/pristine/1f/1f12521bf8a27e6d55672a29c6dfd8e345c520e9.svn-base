@@ -1,0 +1,32 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="si.um.feri.praktikum.MovieDao"%>
+<%@page import="si.um.feri.praktikum.Movie"%>
+<%@include file="header.jsp"%>
+<div class="bg-content">       
+  <!-- Content -->      
+      <div id="content"><div class="ic"></div>
+    <div class="container">
+          <div class="row">
+        <article class="span12">
+        <h4 style="color:rgb(150, 18, 18);">Spored</h4>
+         </article>
+        <div class="clear"></div>
+         <ul class="portfolio clearfix">           
+          
+           <% MovieDao od=new MovieDao(); %>
+           
+           <% for (Movie o :od.selectMovie()) { %>
+           <% boolean a = o.isNa_voljo(); %>
+           <% if(a == true){ %>
+           
+           <li class="box" style="width:200px;height:330px;"><a href="film.jsp?poslji=<%=o.getBazniID() %>" ><img alt="" src="<%=o.getPoster()%>" style="width:200px;height:270px;"><h5><%=o.getTitle() %></h5></a></li>
+           
+            <% } %> 
+            <% } %> 
+                     
+            </ul> 
+      </div>
+        </div>
+  </div>
+    </div>
+<%@include file="footer.jsp"%>

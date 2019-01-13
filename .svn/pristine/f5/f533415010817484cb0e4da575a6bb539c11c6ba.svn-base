@@ -1,0 +1,213 @@
+package si.um.feri.praktikum;
+
+import java.io.IOException;
+import java.util.Date;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet(urlPatterns="/Glasovalnik")
+public class Glasovalnik extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+ 
+    public Glasovalnik() {
+        super();
+       
+    }
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		try {
+		int IDbaza = Integer.parseInt(request.getParameter("idFilma"));
+		String film = request.getParameter("title");
+		int vsota1 = Integer.parseInt(request.getParameter("datum1"));
+		int vsota2 = Integer.parseInt(request.getParameter("datum2"));
+		int vsota3 = Integer.parseInt(request.getParameter("datum3"));
+		int vsota4 = Integer.parseInt(request.getParameter("datum4"));
+		int vsota5 = Integer.parseInt(request.getParameter("datum5"));
+		int vsota6 = Integer.parseInt(request.getParameter("datum6"));
+		
+		    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
+		    Date parsedDate = dateFormat.parse(request.getParameter("datum"));
+		    Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
+		
+		Cookie[] piskotki = request.getCookies();
+		int flag = 0, vr;
+		for(int i=0; i<piskotki.length; i++) {
+			try {
+			    vr = Integer.parseInt(piskotki[i].getValue());
+			} catch (NumberFormatException e) {
+			    vr = -1;
+			}
+			if(vr==IDbaza) {
+				flag++;
+			}
+		}
+		if(flag == 0) {
+			
+				Class.forName("com.mysql.jdbc.Driver");
+				Connection con = DriverManager.getConnection("jdbc:mysql://svizec2.informatika.uni-mb.si:3306/s4p3_kino?autoReconnect=true&useSSL=false", "s4p3_kino", "v345qc");
+				PreparedStatement title = con.prepareStatement("select title from movies where movies_id = ?");
+				title.setInt(1, IDbaza);
+				PreparedStatement steviloP = con.prepareStatement("select petek_2 from glasovanje where glasovanje_ID = ?");
+				steviloP.setInt(1, IDbaza);
+				PreparedStatement steviloP1 = con.prepareStatement("select petek_3 from glasovanje where glasovanje_ID = ?");
+				steviloP1.setInt(1, IDbaza);
+				PreparedStatement steviloP2 = con.prepareStatement("select petek_9 from glasovanje where glasovanje_ID = ?");
+				steviloP2.setInt(1, IDbaza);
+				PreparedStatement steviloS = con.prepareStatement("select sob_2 from glasovanje where glasovanje_ID = ?");
+				steviloS.setInt(1, IDbaza);
+				PreparedStatement steviloS1 = con.prepareStatement("select sob_3 from glasovanje where glasovanje_ID = ?");
+				steviloS1.setInt(1, IDbaza);
+				PreparedStatement steviloS2 = con.prepareStatement("select sob_9 from glasovanje where glasovanje_ID = ?");
+				steviloS2.setInt(1, IDbaza);
+	
+				PreparedStatement sestevekP = con.prepareStatement("select petek_2_vsota from glasovanje where glasovanje_ID = ?");
+				sestevekP.setInt(1, IDbaza);
+				PreparedStatement sestevekP1 = con.prepareStatement("select petek_3_vsota from glasovanje where glasovanje_ID = ?");
+				sestevekP1.setInt(1, IDbaza);
+				PreparedStatement sestevekP2 = con.prepareStatement("select petek_9_vsota from glasovanje where glasovanje_ID = ?");
+				sestevekP2.setInt(1, IDbaza);
+				PreparedStatement sestevekS = con.prepareStatement("select sob_2_vsota from glasovanje where glasovanje_ID = ?");
+				sestevekS.setInt(1, IDbaza);
+				PreparedStatement sestevekS1 = con.prepareStatement("select sob_3_vsota from glasovanje where glasovanje_ID = ?");
+				sestevekS1.setInt(1, IDbaza);
+				PreparedStatement sestevekS2 = con.prepareStatement("select sob_9_vsota from glasovanje where glasovanje_ID = ?");
+				sestevekS2.setInt(1, IDbaza);
+				
+				double steviloVrednost = 0;
+				ResultSet steviloOcen = steviloP.executeQuery();
+				while (steviloOcen.next())
+					steviloVrednost = steviloOcen.getDouble(1);
+				steviloVrednost++;
+				
+				double vsotaVrednost = 0;
+				ResultSet sestevekOcen = sestevekP.executeQuery();
+				while (sestevekOcen.next())
+					vsotaVrednost = sestevekOcen.getDouble(1);
+				vsotaVrednost += vsota1;
+				
+				double steviloVrednost2 = 0;
+				ResultSet steviloOcen2 = steviloP1.executeQuery();
+				while (steviloOcen2.next())
+					steviloVrednost2 = steviloOcen2.getDouble(1);
+				steviloVrednost2++;
+				
+				double vsotaVrednost2 = 0;
+				ResultSet sestevekOcen2 = sestevekP1.executeQuery();
+				while (sestevekOcen2.next())
+					vsotaVrednost2 = sestevekOcen2.getDouble(1);
+				vsotaVrednost2 += vsota2;
+				
+				double steviloVrednost3 = 0;
+				ResultSet steviloOcen3 = steviloP2.executeQuery();
+				while (steviloOcen3.next())
+					steviloVrednost3 = steviloOcen3.getDouble(1);
+				steviloVrednost3++;
+				
+				double vsotaVrednost3 = 0;
+				ResultSet sestevekOcen3 = sestevekP2.executeQuery();
+				while (sestevekOcen3.next())
+					vsotaVrednost3 = sestevekOcen3.getDouble(1);
+				vsotaVrednost3 += vsota3;
+				
+				
+				double steviloVrednost4 = 0;
+				ResultSet steviloOcen4 = steviloS.executeQuery();
+				while (steviloOcen4.next())
+					steviloVrednost4 = steviloOcen4.getDouble(1);
+				steviloVrednost4++;
+				
+				double vsotaVrednost4 = 0;
+				ResultSet sestevekOcen4 = sestevekS.executeQuery();
+				while (sestevekOcen4.next())
+					vsotaVrednost4 = sestevekOcen4.getDouble(1);
+				vsotaVrednost4 += vsota4;
+				
+				double steviloVrednost5 = 0;
+				ResultSet steviloOcen5 = steviloS1.executeQuery();
+				while (steviloOcen5.next())
+					steviloVrednost5 = steviloOcen5.getDouble(1);
+				steviloVrednost5++;
+				
+				double vsotaVrednost5 = 0;
+				ResultSet sestevekOcen5 = sestevekS1.executeQuery();
+				while (sestevekOcen.next())
+					vsotaVrednost5 = sestevekOcen5.getDouble(1);
+				vsotaVrednost5 += vsota5;
+				
+				double steviloVrednost6 = 0;
+				ResultSet steviloOcen6 = steviloS2.executeQuery();
+				while (steviloOcen6.next())
+					steviloVrednost6 = steviloOcen6.getDouble(1);
+				steviloVrednost6++;
+				
+				double vsotaVrednost6 = 0;
+				ResultSet sestevekOcen6 = sestevekS2.executeQuery();
+				while (sestevekOcen.next())
+					vsotaVrednost6 = sestevekOcen6.getDouble(1);
+				vsotaVrednost6 += vsota6;
+				
+				PreparedStatement psi = con.prepareStatement("UPDATE movies SET num_of_scores = ?, sum_of_scores = ? WHERE movies_id = ?");
+				psi.setDouble(1, steviloVrednost);
+				psi.setDouble(2, steviloVrednost2);
+				psi.setDouble(3, steviloVrednost3);
+				psi.setDouble(4, steviloVrednost4);
+				psi.setDouble(5, steviloVrednost5);
+				psi.setDouble(6, steviloVrednost6);	
+				psi.setDouble(7, vsotaVrednost);				
+				psi.setDouble(8, vsotaVrednost2);				
+				psi.setDouble(9, vsotaVrednost3);				
+				psi.setDouble(10, vsotaVrednost4);
+				psi.setDouble(11, vsotaVrednost5);				
+				psi.setDouble(12, vsotaVrednost6);
+				psi.setInt(13, IDbaza);
+				psi.executeUpdate();
+				
+				ResultSet naborTitle = title.executeQuery();
+				while (naborTitle.next())
+					System.out.println(naborTitle.getString(1));
+				
+				
+				
+				String nazivPiskotka = "Film_" + IDbaza;
+				String vsebinaPiskotka = "" + IDbaza;
+				Cookie piskotek = new Cookie(nazivPiskotka, vsebinaPiskotka);
+				response.addCookie(piskotek);
+				
+				request.getRequestDispatcher("/glasovanje.jsp?poslji=" + IDbaza).forward(request, response);
+		}
+				else{
+					
+					String glasovali = "Ste že glasovali";
+			        request.setAttribute("glasovali", glasovali);
+			        request.getRequestDispatcher("/glasovanje.jsp?poslji=" + IDbaza).forward(request, response);
+				
+				}
+				
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
+
+		}
+
+	}
+

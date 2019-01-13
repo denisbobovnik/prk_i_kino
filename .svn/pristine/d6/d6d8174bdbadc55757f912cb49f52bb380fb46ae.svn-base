@@ -1,0 +1,70 @@
+<%@page import="java.util.HashMap"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="si.um.feri.praktikum.*"%>
+<%@page import="java.text.*" %>
+<%@page import="java.sql.ResultSet" %>
+<%@page import="java.sql.Connection" %>
+<%@page import="java.sql.DriverManager" %>
+<%@page import="java.sql.PreparedStatement" %>
+<%@page import="java.util.HashMap" %>
+<%@page import="java.util.Random" %>
+<%@include file="header.jsp"%>
+<script type="text/javascript" src="js/casGlasovanje.js"></script>
+<div class="bg-content">
+		<!-- content -->
+		<div id="content">
+			<div class="ic"></div>
+			<div class="container">
+				<div class="row">
+						<div class="inner-1">
+<h4>Termin glasovanja</h4>
+<span>Glasovanj se konča: </span><span id="demo"> </span>
+
+
+<%/*
+Class.forName("com.mysql.jdbc.Driver");
+Connection con = DriverManager.getConnection("jdbc:mysql://svizec2.informatika.uni-mb.si:3306/s4p3_kino?autoReconnect=true&useSSL=false", "s4p3_kino", "v345qc");
+ResultSet naslovi = con.prepareStatement("select title from movies").executeQuery();
+ResultSet sestevki = con.prepareStatement("select sum_of_scores from movies").executeQuery();
+ResultSet stevila = con.prepareStatement("select num_of_scores from movies").executeQuery();
+Map<String, double> skupaj = new HashMap<String, double>();
+
+*/
+%>
+    
+<form action="/kino/Glasovalnik" method="post">					
+<table frame="above">
+  <tr>
+    <th>Filmi</th>
+    <th>Petek</th>
+    <th>Sobota</th>
+  </tr>
+  <tr>
+  <% int i=0; %>
+  <% GlasovanjeDao od=new GlasovanjeDao(); %>
+  
+   <td><select name="title"  <% for (String o :od.dobiImena()) { %>> 
+   <% %> 
+  <option id="title" value="<%=o %>"><%=o %></option> 
+     <% } %> 
+</select></td>
+  <td><input type="radio"  id="datum"  name="datum1" value="datum">Pet_14:00<br> 
+  <input type="radio" id="datum" name="datum2" value="datum">Pet_15:00<br> 
+  <input type="radio" id="datum" name="datum3" value="datum">Pet_21:00<br> </td>
+
+	<td><input type="radio" id="datum" name="datum4" value="datum">Sob_14:00<br> 
+	<input type="radio" id="datum" name="datum5" value="datum">Sob_15:00<br> 
+	<input type="radio" id="datum" name="datum6" value="datum">Sob_21:00<br> </td>
+
+</table>
+
+  <input type="submit" value="Glasuj">
+</form>
+
+						</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+<%@include file="footer.jsp"%>

@@ -1,0 +1,202 @@
+package si.um.feri.praktikum;
+
+public class Movie {
+	private int bazniID, year, duration;
+	private String trailer, kolosejevID, title, originalTitle, punchline, genre, url, poster, director, producer, writer, cast, distributor, language, country, localization, plot_outline;
+	private double sumOfScores, numOfScores;
+	private boolean na_voljo;
+
+	public Movie(){
+		
+	}
+	
+	
+	public Movie(int bazniID, String kolosejevID, String title, String originalTitle, String punchline, String trailer, String genre, int year, int duration, 
+			String url, String poster, String director, String producer, String writer, String cast, String distributor,
+			String language, String country, String localization, String plot_outline, double sumOfScores,
+			double numOfScores, boolean na_voljo) {
+		super();
+		this.bazniID = bazniID;
+		this.kolosejevID = kolosejevID;
+		this.title = title;
+		this.originalTitle = originalTitle;
+		this.punchline = punchline;
+		this.trailer = trailer;
+		this.genre = genre;
+		this.year = year;
+		this.duration = duration;
+		this.url = url;
+		this.poster = poster;
+		this.director = director;
+		this.producer = producer;
+		this.writer = writer;
+		this.cast = cast;
+		this.distributor = distributor;
+		this.language = language;
+		this.country = country;
+		this.localization = localization;
+		this.plot_outline = plot_outline;
+		this.sumOfScores = sumOfScores;
+		this.numOfScores = numOfScores;
+		this.na_voljo = na_voljo;
+	}
+
+	public String getTrailer() {
+		return trailer;
+	}
+
+
+	public void setTrailer(String trailer) {
+		this.trailer = trailer;
+	}
+
+
+	public int getBazniID() {
+		return bazniID;
+	}
+	public void setBazniID(int bazniID) {
+		this.bazniID = bazniID;
+	}
+	public int getYear() {
+		return year;
+	}
+	public boolean isNa_voljo() {
+		return na_voljo;
+	}
+
+	public void setNa_voljo(boolean na_voljo) {
+		this.na_voljo = na_voljo;
+	}
+
+	public void setYear(int year) {
+		this.year = year;
+	}
+	public int getDuration() {
+		return duration;
+	}
+	public void setDuration(int duration) {
+		this.duration = duration;
+	}
+	public String getKolosejevID() {
+		return kolosejevID;
+	}
+	public void setKolosejevID(String kolosejevID) {
+		this.kolosejevID = kolosejevID;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getOriginalTitle() {
+		return originalTitle;
+	}
+	public void setOriginalTitle(String originalTitle) {
+		this.originalTitle = originalTitle;
+	}
+	public String getPunchline() {
+		return punchline;
+	}
+	public void setPunchline(String punchline) {
+		this.punchline = punchline;
+	}
+	public String getGenre() {
+		return genre;
+	}
+	public void setGenre(String genre) {
+		this.genre = genre;
+	}
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	public String getPoster() {
+		return poster;
+	}
+	public void setPoster(String poster) {
+		this.poster = poster;
+	}
+	public String getDirector() {
+		return director;
+	}
+	public void setDirector(String director) {
+		this.director = director;
+	}
+	public String getProducer() {
+		return producer;
+	}
+	public void setProducer(String producer) {
+		this.producer = producer;
+	}
+	public String getWriter() {
+		return writer;
+	}
+	public void setWriter(String writer) {
+		this.writer = writer;
+	}
+	public String getCast() {
+		return cast;
+	}
+	public void setCast(String cast) {
+		this.cast = cast;
+	}
+	public String getDistributor() {
+		return distributor;
+	}
+	public void setDistributor(String distributor) {
+		this.distributor = distributor;
+	}
+	public String getLanguage() {
+		return language;
+	}
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+	public String getCountry() {
+		return country;
+	}
+	public void setCountry(String country) {
+		this.country = country;
+	}
+	public String getLocalization() {
+		return localization;
+	}
+	public void setLocalization(String localization) {
+		this.localization = localization;
+	}
+	public String getPlotOutline() {
+		return plot_outline;
+	}
+	public void setPlotOutline(String plot_outline) {
+		this.plot_outline = plot_outline;
+	}
+	public double getSumOfScores() {
+		return sumOfScores;
+	}
+	public void setSumOfScores(double sumOfScores) {
+		this.sumOfScores = sumOfScores;
+	}
+	public double getNumOfScores() {
+		return numOfScores;
+	}
+	public void setNumOfScores(double numOfScores) {
+		this.numOfScores = numOfScores;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Movie [bazniID=" + bazniID + ", year=" + year + ", duration=" + duration + ", trailer=" + trailer
+				+ ", kolosejevID=" + kolosejevID + ", title=" + title + ", originalTitle=" + originalTitle
+				+ ", punchline=" + punchline + ", genre=" + genre + ", url=" + url + ", poster=" + poster
+				+ ", director=" + director + ", producer=" + producer + ", writer=" + writer + ", cast=" + cast
+				+ ", distributor=" + distributor + ", language=" + language + ", country=" + country + ", localization="
+				+ localization + ", plot_outline=" + plot_outline + ", sumOfScores=" + sumOfScores + ", numOfScores="
+				+ numOfScores + ", na_voljo=" + na_voljo + "]";
+	}
+
+
+}

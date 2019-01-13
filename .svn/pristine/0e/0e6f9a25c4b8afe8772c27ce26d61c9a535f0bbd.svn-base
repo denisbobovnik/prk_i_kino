@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	<title>Codester | Blog</title>
+	<meta charset="utf-8">
+	<link rel="icon" href="http://dzyngiri.com/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="http://dzyngiri.com/favicon.png" type="image/x-icon" />
+    <meta name="description" content="Codester is a free responsive Bootstrap template by Dzyngiri">
+    <meta name="keywords" content="free, template, bootstrap, responsive">
+    <meta name="author" content="Inbetwin Networks">  
+	<link rel="stylesheet" href="css/bootstrap.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="css/responsive.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="css/style.css" type="text/css" media="screen">
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/superfish.js"></script>
+	<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
+	<script type="text/javascript" src="js/jquery.cookie.js"></script>   
+    
+	<script type="text/javascript">if($(window).width()>1024){document.write("<"+"script src='js/jquery.preloader.js'></"+"script>");}	</script>
+	<script>		
+		 jQuery(window).load(function() {	
+		 $x = $(window).width();		
+	if($x > 1024)
+	{			
+	jQuery("#content .row").preloader();}	
+	
+	jQuery(".list-blog li:last-child").addClass("last"); 
+	jQuery(".list li:last-child").addClass("last"); 
+
+	
+    jQuery('.spinner').animate({'opacity':0},1000,'easeOutCubic',function (){jQuery(this).css('display','none')});	
+  		  }); 
+					
+	</script>
+
+	<!--[if lt IE 8]>
+  		<div style='text-align:center'><a href="http://www.microsoft.com/windows/internet-explorer/default.aspx?ocid=ie6_countdown_bannercode"><img src="http://www.theie6countdown.com/img/upgrade.jpg"border="0"alt=""/></a></div>  
+ 	<![endif]-->
+	<!--[if (gt IE 9)|!(IE)]><!-->
+	<!--<![endif]-->
+	<!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <link rel="stylesheet" href="css/docs.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="css/ie.css" type="text/css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400' rel='stylesheet' type='text/css'>
+  <![endif]-->
+  
+  <!--Google analytics code-->	  
+	  <script type="text/javascript">
+           var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-29231762-1']);
+          _gaq.push(['_setDomainName', 'dzyngiri.com']);
+          _gaq.push(['_trackPageview']);
+        
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+      </script>
+	</head>
+
+	<body>
+<div class="spinner"></div>
+<!--  header  -->
+<header>
+      <div style="background-color:rgb(150, 18, 18)" class="container clearfix">
+    <div style="background-color:rgb(150, 18, 18)" class="row">
+          <div class="span12">
+        <div class="navbar navbar_">
+              <div class="container">
+            <h1 class="brand brand_"><a href="index.html"><img alt="logo" src="img/logo.png" width="80px" height="80px"></a></h1>
+            <a class="alogo">Kolosej</a>
+            <a class="btn btn-navbar btn-navbar_" data-toggle="collapse" data-target=".nav-collapse_">Menu <span class="icon-bar"></span> </a>
+            
+            <div class="nav-collapse nav-collapse_  collapse">
+                  <ul class="nav sf-menu">
+                <li ><a href="index.html">Domov</a></li>
+              
+                <li ><a href="spored.html">Spored</a></li>
+				<li class="active"><a href="vstopnice.html">Vstopnice</a></li>
+				<li><a href="Informacije.html">Info</a></li> 
+				<li><a href="Prijava.html">Prijava</a></li>               
+                
+              </ul>
+                </div>
+          </div>
+            </div>
+      </div>
+        </div>
+  </div>
+    </header>
+<div class="bg-content">       
+  <!--  content  -->      
+   <div id="content"><div class="ic"></div>
+    <div class="container" >
+          <div class="row">
+        <article class="span12">
+         <div class="inner-1">         
+          <ul class="list-blog">
+            <li>  
+            <h1>Vstopnice </h1>  
+            <p>Koliko stane vstopnica? Kdaj jo lahko kupim? Ali moram vstopnico nujno kupiti na blagajni?
+             Ali lahko rezerviram vstopnico vnaprej? KakĹˇne popuste ponujate? Odgovore na vsa vpraĹˇanja o
+              kino vstopnicah najdete v nadaljevanju!</p>
+           
+            <h5>Cena stopnic za filme do 120 minut</h5>   
+             <div class="clear"></div>            
+              <table class="standard" style="width:480px">
+		<tr>
+			<th>&nbsp; </th>
+			<th style="text-align:center;">redna cena<br/><nobr>(pon.-pet.)</nobr> </th>
+			<th style="text-align:center;">redna cena<br/><nobr>(sob.-ned.,</nobr> prazniki) </th>
+			<th style="text-align:center;">cena s popustom * </th>
+			<th style="text-align:center;">cena do 14. ure </th>
+			<th style="text-align:center;">predpremiere </th>
+		</tr>
+		<tr>
+			<td> Ljubljana </td>
+			<td style="text-align:center;"><nobr>5,85 &euro;</nobr> </td>
+			<td style="text-align:center;"><nobr>6,20 &euro;</nobr> </td>
+			<td style="text-align:center;"><nobr>5,50 &euro;</nobr> </td>
+			<td style="text-align:center;"><nobr>5,50 &euro;</nobr> </td>
+			<td style="text-align:center;">/ </td>
+		</tr>
+		<tr>
+			<td> Kranj </td>
+			<td style="text-align:center;">4,70 &euro;	</td>
+			<td style="text-align:center;">4,90 &euro; </td>
+			<td style="text-align:center;">4,60 &euro; </td>
+			<td style="text-align:center;">4,60 &euro; </td>
+			<td style="text-align:center;">/ </td>
+		</tr>
+	</table>   
+	<br> 
+	<h5>Cena stopnic za filme od 120 minut</h5>                           
+              <table class="standard" style="width:480px">
+		<tr>
+			<th>&nbsp; </th>
+			<th style="text-align:center;">redna cena<br/><nobr>(pon.-pet.)</nobr> </th>
+			<th style="text-align:center;">redna cena<br/><nobr>(sob., ned.,</nobr> prazniki) </th>
+			<th style="text-align:center;">cena s popustom * </th>
+			<th style="text-align:center;">cena do 14. ure </th>
+			<th style="text-align:center;">predpremiere </th>
+		</tr>
+		<tr>
+			<td> Ljubljana </td>
+			<td style="text-align:center;"><nobr>6,35 &euro;</nobr> </td>
+			<td style="text-align:center;"><nobr>6,70 &euro;</nobr> </td>
+			<td style="text-align:center;"><nobr>5,80 &euro;</nobr> </td>
+			<td style="text-align:center;"><nobr>5,80 &euro;</nobr> </td>
+			<td style="text-align:center;">/ </td>
+		</tr>
+		<tr>
+			<td> Kranj </td>
+			<td style="text-align:center;">5,10 &euro;	</td>
+			<td style="text-align:center;">5,35 &euro; </td>
+			<td style="text-align:center;">4,80 &euro; </td>
+			<td style="text-align:center;">4,80 &euro; </td>
+			<td style="text-align:center;">/ </td>
+		</tr>
+	</table>
+	<br>
+	<h5>Cene vstopnic za 3D filme</h5>
+	
+		<table class="standard" style="width:480px">
+		<tr>
+			<th>&nbsp; </th>
+			<th style="text-align:center;">redna cena<br/><nobr>(pon.-pet.)</nobr> </th>
+			<th style="text-align:center;">redna cena<br/><nobr>(sob., ned.,</nobr> prazniki) </th>
+			<th style="text-align:center;">cena s popustom * </th>
+			<th style="text-align:center;">Kinodan </th>
+			<th style="text-align:center;">predpremiere </th>
+		</tr>
+		<tr>
+			<td> <span class="caps">XPAND</span> Ljubljana *** </td>
+			<td style="text-align:center;"><nobr>8,15 &euro;</nobr> </td>
+			<td style="text-align:center;"><nobr>8,55 &euro;</nobr> </td>
+			<td style="text-align:center;"><nobr>6,95 &euro;</nobr> </td>
+			<td style="text-align:center;"><nobr>6,60 &euro;</nobr> </td>
+			<td style="text-align:center;">/ </td>
+		</tr>
+		<tr>
+			<td> Ljubljana </td>
+			<td style="text-align:center;"><nobr>8,15 &euro;</nobr> </td>
+			<td style="text-align:center;"><nobr>8,55 &euro;</nobr> </td>
+			<td style="text-align:center;"><nobr>6,95 &euro;</nobr> </td>
+			<td style="text-align:center;"><nobr>6,60 &euro;</nobr> </td>
+			<td style="text-align:center;">/ </td>
+		</tr>
+		<tr>
+			<td> Kranj </td>
+			<td style="text-align:center;">6,15 &euro;	</td>
+			<td style="text-align:center;">6,35 &euro; </td>
+			<td style="text-align:center;">5,30 &euro; </td>
+			<td style="text-align:center;">/ </td>
+			<td style="text-align:center;">/ </td>
+		</tr>
+	</table>
+	<br>
+	<p>Ĺ tudentje in dijaki, seniorji, otroci. Ĺ tudentski popust velja od ponedeljka do petka (razen ob praznikih), 
+	popust za otroke in seniorje pa vsak dan v tednu. Vstopnice za otroke, dijake, Ĺˇtudente niso prenosljive.</p>
+	<p>Za ogled filma v 3D tehniki potrebujete 3D oÄŤala. Za uporabo 3D oÄŤal, ki so obiskovalcem na voljo
+	 za uporabo v Kolosejevih kinocentrih (Ljubljana, Kranj), je potrebno doplaÄŤati 1 â‚¬, ki 
+	 ga cena v tabeli Ĺľe vkljuÄŤuje. Za uporabo 3D oÄŤal, ki so obiskovalcem na voljo za uporabo
+	  v Kolosejevih kinocentrih (Ljubljana, Kranj), dobite pri nakupu vstopnice poseben raÄŤun,
+	   s katerim oÄŤala prevzamete pred vhodom v dvorano. ÄŚe vstopnico za ogled 3D filma kupujete 
+	   prek avtomatskih sistemov prodaje (Joker na internetu in Simobilova Kino vstopnica)
+	 se vam stroĹˇek za oÄŤala avtomatiÄŤno priĹˇteje k ceni, oÄŤala prav tako dobite pred vhodom v dvorano.</p>
+	 <p>Dvorana XPAND v Ljubljani je v centru Arena Play & Party nasproti Koloseja.</p>
+	 <p>Poseben dan v tednu pa je torek - Kinodan, ko veljajo Ĺˇe posebni popusti pri nakupu vstopnice.
+	  Kinodan trenutno velja samo v Ljubljani. V Kranju pa namesto Kinodneva poteka akcija Super ponedeljek.</p>
+	  <p>Prodaja vstopnic poteka vsak dan 30 minut pred prvo predstavo.</p>
+	  
+	  <h5>NaÄŤin nakupa vstopnic</h5>
+	  
+	  <table class="standard" style="width:480px">
+		<tr>
+			<th>prodajno mesto </th>
+			<th>nakup</th>
+			<th>rezervacije</th>
+			<th>plaÄŤilno sredstvo</th>
+			<th>prevzem </th>
+		</tr>
+		<tr>
+			<td> blagajna </td>
+			<td> DA </td>
+			<td> NE </td>
+			<td> gotovina, kartica Joker </td>
+			<td> / </td>
+		</tr>
+		<tr>
+			<td> avtomat za vstopnice </td>
+			<td> DA </td>
+			<td> NE </td>
+			<td> kartica Joker </td>
+			<td> / </td>
+		</tr>
+		<tr>
+			<td> <a href="https://vstopnice.kolosej.si/">https://vstopnice.kolosej.si</a> </td>
+			<td> DA </td>
+			<td> NE </td>
+			<td> kartica Joker </td>
+			<td> avtomat za vstopnice, blagajna. Prevzem je moĹľen samo na lokaciji, kjer je predstava, za katero so vstopnice. </td>
+		</tr>
+	</table>
+    <h5>Vstopnice s popusti</h5>
+
+<p>V Kolosejevem sistemu pri nakupu vstopnice nudimo posebne popuste seniorjem nad 60 let, otrokom do 10. leta in
+Ĺˇtudentom ter dijakom - cena je za vse tri skupine obiskovalcev enotna, nakup vstopnice s takim popustom pa je moĹľen
+samo na blagajni, ne pa prek sistemov avtomatske prodaje, kot so aparat za vstopnice, Simobilova Kino vstopnica ali
+internet.</p>
+
+<p>Ĺ tudentski popust velja od vkljuÄŤno ponedeljka do vkljuÄŤno petka,
+otroĹˇki popust in popust za seniorje pa vsak dan v tednu. Ĺ tudentje so
+do popusta upraviÄŤeni ob predloĹľitvi svoje Ĺˇtudentske oziroma dijaĹˇke
+izkaznice z nalepko za tekoÄŤe Ĺˇolsko leto ali indeksom, otroci z
+zdravstveno izkaznico, seniorji pa z osebnim dokumentom.</p>
+
+
+<h5>Rezervacije vstopnic</h5>
+
+<p>Rezervacije vstopnic za filmske predstave v Koloseju niso moĹľne. Vstopnice je mogoÄŤe kupiti v predprodaji na blagajnah vseh Kolosejevih centrov in kina Komune, in sicer za vse predstave, ki so vidne v sporedu na naĹˇi spletni strani, v kolikor niso razprodane.</p>
+
+
+<h5>Kdaj so vstopnice naprodaj?</h5>
+
+<p>V Koloseju kino vstopnice praviloma prodajamo za en kino teden vnaprej. Kino teden traja od vkljuÄŤno ÄŤetrtka do vkljuÄŤno srede, potem pa se s ÄŤetrtkom spet zamenja. Nov spored je
+praviloma objavljen najkasneje do srede do 12. ure (razen izjemoma). To pomeni, da je v sredo popoldne moĹľno kupiti vstopnice za skoraj teden dni (do vkljuÄŤno naslednje srede), potem pa se
+seznam dni s predstavami krajĹˇa - spet do srede, ko se seznam napolni s predstavami v novem kino-tednu. Spored na spletni strani www.kolosej.si se generira neposredno iz prodajnega sistema,
+kar pomeni, da so vstopnice na voljo, ÄŤe so vidne na sporedu na www.kolosej.si.</p>
+
+
+<h5>Nakup vstopnic prek spleta</h5>
+
+<p>Nakup vstopnic prek spleta lahko opravite s Kolosejevo kartico kino Joker in kmalu s kreditno kartico (MasterCard ali Visa).  Spored na spletni strani <a href="http://www.kolosej.si/">www.kolosej.si</a> se generira neposredno iz prodajnega sistema, kar pomeni, da so vstopnice na voljo, ÄŤe so vidne na sporedu na spletni strani <a href="www.kolosej.si">www.kolosej.si</a>. ÄŚe se odloÄŤite za nakup prek interneta, si izberite enoto, kjer si boste film ogledali (izbirate lahko med kinocentri Kolosej Ljubljana, Mestna dvorana Komuna in Kolosej De Luxe Kranj). V izbrani enoti si izberite kateri film si Ĺľelite ogledati ter Ĺľeljeni datum ter uro predstave. V preglednem programu izberete sedeĹľ in vrsto, kjer bi Ĺľeleli sedeti. Vstopnice, ki ste jih kupili, prevzamete v izbranem kinocentru z voucherjem oziroma prevzemno kodo, ki jo prejmete na elektronski naslov oziroma se vam izpiĹˇe ob potrditvi nakupa.</p>
+
+
+<h5>Joker</h5>
+
+<p>Za filmske navduĹˇence, ki v kinu preĹľivijo nadpovpreÄŤno veliko
+ÄŤasa, je prav gotovo najbolj primerna reĹˇitev kino <a
+href="./kino-joker/">Joker</a>, s katerim imate popust pri nakupu
+vstopnic.
+
+<h5>Joker+</h5>
+
+<p><a href="./joker-plus/">Joker+</a> je Jokerju popolnoma enaka
+storitev, le da je namenjena pravnim osebam.
+
+<h5>Filmski abonmaji 2016/2017</h5>
+
+<p>V Koloseju smo tudi letos pripravili <a href="./abonma/">filmske
+abonmaje</a>, ki so izbor najboljĹˇih filmov za najmlajĹˇe ljubitelje
+filma, za najstnike s stilom in za filmske strastneĹľe.
+
+<h5>S Ĺˇolo v kino</h5>
+
+<p>V dopoldanskem ÄŤasu vam ponujamo animirane filme za najmlajĹˇe,
+mladinske filme, akcije komedije, ameriĹˇke, evropske in slovenske
+filme; filme, ki so nastali na osnovi literarne predloge in pomembnih
+zgodovinskih dogodkov ali pa izvirajo iz tegob odraĹˇÄŤanja in nas
+popeljejo v svet domiĹˇljije ter zabave. <a href="./solske/">NaroÄŤite
+svojo predstavo!</a>
+
+<h5>Bianco kuponi</h5>
+
+<p>Kupone, ki ste jih dobili prek Ĺˇtudentskih servisov, podjetij ali
+kako drugaÄŤe, morate vedno zamenjati za vstopnico za doloÄŤeno
+predstavo. Vstop v dvorano samo s kuponom ni mogoÄŤ. Kupone lahko
+vnovÄŤite samo na blagajnah, ne pa prek avtomatskih sistemov prodaje
+vstopnic. Edina moĹľnost je, da si prek Hitre vstopnice
+<b>rezervirate</b> sedeĹľ, ob prevzemu in plaÄŤilu rezervacije pa za plaÄŤilo
+uporabite svoj kupon. <b>Pozor</b>: ÄŤe boste prek Hitre
+vstopnice vstopnico <b>kupili</b>, kupona ne boste veÄŤ mogli vnovÄŤiti, ampak
+bo pri transakciji uporabljena redna cena vstopnice za izbrano
+predstavo, zato v takih primerih pozorno izberite <b>rezervacijo</b> in ne
+nakupa. Menjava vstopnic ali stornacija nakupov, opravljenih prek
+sistemov avtomatske prodaje, <b>ni mogoÄŤa!</b></p>
+<h5>SploĹˇni pogoji spletnega nakupa digitalnih vstopnic</h5>
+
+<p><a href="/static/cms/vstopnice/SPDV-Reit-Splosni-pogoji-spletnega-nakupa-digitalnih-vstopnic.194224573032.pdf">SploĹˇni pogoji spletnega nakupa digitalnih vstopnic</a> (pdf)</p>
+               
+             
+                        
+                                      
+          </ul>
+          </div>  
+        </article>
+        
+      </div>
+     </div>
+  </div>
+ </div>
+
+<!--  footer  -->
+<footer>
+      <div class="container clearfix">
+    <ul class="list-social pull-right">
+          <li><a class="icon-1" href="#"></a></li>
+          <li><a class="icon-3" href="#"></a></li>
+          <li><a class="icon-4" href="#"></a></li>
+        </ul>
+    <div class="privacy pull-left">&copy; 2017 Inter 32 all rights reserved</div>
+  </div>
+    </footer>
+<script type="text/javascript" src="js/bootstrap.js"></script>
+</body>
+</html>

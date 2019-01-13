@@ -1,0 +1,24 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import ="java.sql.*" %>
+<%
+    String email = request.getParameter("email");
+    String pass = request.getParameter("pass");
+    Class.forName("com.mysql.jdbc.Driver");
+    Connection con = DriverManager.getConnection("jdbc:mysql://svizec2.informatika.uni-mb.si:3306/s4p3_kino?autoReconnect=true&useSSL=false", "s4p3_kino", "v345qc");
+    Statement st = con.createStatement();
+    ResultSet rs = st.executeQuery("select * from users where email='" + email + "' and pass='" + pass + "'");
+    String bazniMail, baznoGeslo;
+    if (rs.next()) {
+    	bazniMail = rs.getString(4);
+    	baznoGeslo = rs.getString(5);
+    	if((bazniMail.compareTo(email)==0)&&(baznoGeslo.compareTo(pass)==0)) {
+        	session.setAttribute("email", email);
+        	response.sendRedirect("index.jsp");
+    	}
+    } else {
+    	out.println("<script type=\"text/javascript\">");
+    	out.println("alert('Nepravilno geslo ali pa uporabnik ne obstaja! Poskusite ponovno.');");
+    	out.println("location='prijava.jsp';");
+    	out.println("</script>");
+    }
+%>

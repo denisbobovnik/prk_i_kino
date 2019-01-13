@@ -1,0 +1,42 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@include file="header.jsp"%>
+<div class="bg-content">
+		<!-- content -->
+		<div id="content">
+			<div class="ic"></div>
+			<div class="container">
+				<div class="row">
+						<div class="inner-1">
+<h4>Termin glasovanja</h4>
+<p>Glasovanj se zacne <time>10:00</time> vsak teden.</p>
+<form action="/action_page.php" method="get">					
+<table frame="above">
+  <tr>
+    <th>Filmi</th>
+    <th>Petek</th>
+    <th>Sobota</th>
+  </tr>
+  <tr>
+   <td><select>
+  <option value="volvo">Piratis-1</option>
+  <option value="saab">Piratis-2</option>
+  <option value="opel">Piratis-3</option>
+</select></td>
+  <td><input type="radio" name="film" value="Bike">Pet_14:00<br> 
+  <input type="radio" name="film" value="Bike">Pet_15:00<br> 
+  <input type="radio" name="film" value="Bike">Pet_21:00<br> </td>
+
+	<td><input type="radio" name="film" value="Bike">Sob_14:00<br> 
+	<input type="radio" name="film" value="Bike">Sob_15:00<br> 
+	<input type="radio" name="film" value="Bike">Sob_21:00<br> </td>
+
+</table>
+  <input type="submit" value="Glasuj">
+</form>
+						</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+<%@include file="footer.jsp"%>

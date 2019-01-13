@@ -1,0 +1,214 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="si.um.feri.praktikum.MovieDao"%>
+<%@page import="si.um.feri.praktikum.Movie"%>
+<%@page import="si.um.feri.praktikum.ShowDao"%>
+<%@page import="si.um.feri.praktikum.Show"%>
+<%@page import="java.util.*"%>
+<%@page import="java.text.*" %>
+<%@include file="header.jsp"%>
+<div class="bg-content">
+  <div class="container">
+    <div class="row">
+    
+          <br />
+      <div class="span6" style="height: 270px;">
+      	<h4 style="color:rgb(150, 18, 18);">Prisrčno pozdravljeni!</h4>
+      <p>
+      Veseli smo, da ste se oglasili. Posebej za vas smo stran posodobili z novim, bolj privlačnim izgledom, dodali nekaj uporabnih funkcij ter vam tako izboljšali uporabniško izkušnjo.
+      <br /><br />Med drugim lahko zdaj: ocenjujete ter komentirate filme, izvažate podatke o predstavah (XML), pregledujete kraje in datume predvajanja posameznih filmov ter pregledate pretekle filme.      
+      <br /><br />Za uporabo nekaterih funkcij je potrebna <a style="margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;" href="prijava.jsp">prijava</a>.
+      </p>
+      </div>
+    
+    
+       <div class="span6"> 
+       <br />
+		<% MovieDao od=new MovieDao(); %>
+		<% 
+              Stack<Movie> st = new Stack<Movie>();
+           ArrayList<Movie> filmi = new	ArrayList<Movie>();			%>
+           <% for (Movie o :od.selectMovie()) { %>
+           <% boolean a = o.isNa_voljo(); %>
+           <% if(a == true)	
+           filmi.add(o);
+          
+           		Movie[] poljeFilmov = new Movie[filmi.size()];
+           		int i=0;
+           		for(Movie m : filmi) {
+           		poljeFilmov[i] = m;
+           			i++;
+           		}
+           		Random r = new Random();
+           		int is;
+           		for(int j=0; j<10; j++) {
+           			is = r.nextInt(poljeFilmov.length);
+           			st.push(poljeFilmov[is]);
+           		}
+           		
+         } %>
+		
+		<div id="myCarousel" class="carousel slide" data-ride="carousel">
+  
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner" style="height: 280px; width: 550px;" >
+  <% for(int i = 0; i<1; i++){
+  	Movie a = (Movie) st.pop();%>
+      	<div class="item active" >
+      <a href="film.jsp?poslji=<%=a.getBazniID() %>" ><img src="<%=a.getPoster()%>" height="270px" width="200px" alt=""></a>
+<div class="carousel-caption" style="margin-left: 200px; background-color: #c9c9c9; height: 270px; width: 350px;">
+        <h3><%=a.getTitle() %></h3>
+        <p><%=a.getGenre() %></p>
+       
+           
+        <% double num=a.getNumOfScores();
+					    		if(num==0) //prepreči deljenje z 0
+					    			num++;
+              		double sum=a.getSumOfScores();
+              		double povprecnaOcena = sum/num;
+					NumberFormat formatter = NumberFormat.getInstance(); 
+					formatter.setMaximumFractionDigits(1);	
+					formatter.setMinimumFractionDigits(1);	
+					%> 
+              		<h5 style="color: white;">Povprečna ocena: <%=formatter.format(povprecnaOcena)%>/5</h5>
+  <h6><a href="film.jsp?poslji=<%=a.getBazniID() %>">Več o filmu...</a></h6>
+        
+      </div>
+    </div>  	 
+  <% } %>
+  
+  <% for(int i = 0; i<9; i++){
+  	Movie a = (Movie) st.pop();%>
+
+
+    <div class="item">
+     <a href="film.jsp?poslji=<%=a.getBazniID() %>" ><img src="<%=a.getPoster()%>" height="270px" width="200px" alt=""></a>
+      <div class="carousel-caption" style="margin-left: 200px; background-color: #c9c9c9; height: 270px; width: 350px;">
+        <h3><%=a.getTitle() %></h3>
+        <p><%=a.getGenre() %></p>
+    
+         <% double num=a.getNumOfScores();
+					    		if(num==0) //prepreči deljenje z 0
+					    			num++;
+              		double sum=a.getSumOfScores();
+              		double povprecnaOcena = sum/num;
+					NumberFormat formatter = NumberFormat.getInstance(); 
+					formatter.setMaximumFractionDigits(1);	
+					formatter.setMinimumFractionDigits(1);	
+					%> 
+					
+              		<h5 style="color: white;">Povprečna ocena: <%=formatter.format(povprecnaOcena)%>/5</h5>
+       <h6> <a href="film.jsp?poslji=<%=a.getBazniID() %>">Več o filmu...</a></h6>
+        
+      </div>
+    </div>
+	<%} %>
+
+  </div>
+    
+ 
+</div>
+
+
+
+
+<script>
+$(function(){
+    $('.carousel').carousel({
+      interval: 4000
+    });
+});
+</script>
+
+
+
+
+
+
+
+        <!-- <span id="responsiveFlag"></span>-->
+       
+      </div>
+
+      
+    </div>
+    
+  </div>
+      
+      <!-- content -->
+      
+      <div id="content" class="content-extra"><div class="ic"></div>
+    <div class="row-1">
+        <div class="container">
+    		<div class="row">
+        <article class="span12">
+        <h4 style="color:rgb(150, 18, 18);">Aktualni spored</h4>
+         </article>
+        <div class="clear"></div>
+         <ul class="portfolio clearfix">           
+           
+           <% int b = 0; 
+              List<Movie> mov = new ArrayList();%>
+           <% for (Movie o :od.selectMovie()) { %>
+           <% boolean a = o.isNa_voljo(); %>
+           <% if(a == true){ %>
+           <% mov.add(o); %>
+           <% } %>
+           <% } %>
+           <% Collections.shuffle(mov);%>
+           <% for(Movie ab : mov){ %>
+           <% if(b <= 9){ %>
+           	  <li class="box" style="width:200px;height:330px;"><a href="film.jsp?poslji=<%=ab.getBazniID() %>" ><img alt="" src="<%=ab.getPoster()%>" style="width:200px;height:270px;"><h5><%=ab.getTitle() %></h5></a></li>
+           <% b++; %>
+           <% } %> 
+           <% } %>                     
+         </ul> 
+      </div>
+     	</div>
+    </div>
+    
+       
+    <div class="container">
+          <div class="row">
+        <article class="span8">
+              <h3 style="color:rgb(150, 18, 18);">O nas</h3>
+              <div class="wrapper">
+            <figure class="img-indent"><img src="img/kolosej_stavba.jpg" width="350px" height="450px" alt="stavba" ></figure>
+            <div class="inner-1 overflow extra">
+                  <div class="txt-1">Ko govorimo o kinematografiji na Slovenskem, ne moremo mimo Koloseja.
+                   V zadnjem desetletju je podjetje na prikazovalskem trgu pustilo močan pečat, saj je na 
+                   slovenska tla prineslo številne inovacije s tega področja - tehnološke in konceptualne
+                    spremembe v načinu preživljanja prostega časa v kombinaciji z ogledom filma na velikem 
+                    kino platnu. Kolosej je leta 2001 odprl prvi kinocenter v Sloveniji - odtlej je na naših 
+                    tleh zraslo kar nekaj podobnih. </div>
+                </div>
+          </div>
+            </article>
+        <article class="span4">
+              <h3 style="color:rgb(150, 18, 18);">Informacije</h3>
+                <div class="wrapper">
+                  <ul class="list list-pad">
+                          <li><a class="ainfo" href="oPodjetju.jsp">O podjetju</a></li>
+                          <li><a class="ainfo" href="trzenje.jsp">Trženje</a></li>
+                          <li><a class="ainfo" href="pravnaObvestila.jsp">Pravna obvestila</a></li>
+                          <li><a class="ainfo" href="zaposlitev.jsp">Zaposlitev</a></li>
+                          
+                        </ul>
+                    <ul class="list list-pad">
+                          <li><a class="ainfo" href="cookies.jsp">Piškotki</a></li>                        
+                          <li><a class="ainfo" href="http://www.arena.si/bowling/">Bowling</a></li>
+                          <li><a class="ainfo" href="http://www.arena.si/biljard/">Biljard</a></li>
+                           <li><a class="ainfo" href="http://www.casino-rio.si/">Fit Inn</a></li>
+                        </ul>
+                </div>
+            </article>
+      </div>
+        </div>
+  </div>
+    </div>
+<%@include file="footer.jsp"%>

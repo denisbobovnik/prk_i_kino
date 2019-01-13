@@ -1,0 +1,12 @@
+<%
+    if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") == "")) {
+%>
+Niste prijavljeni!<br/>Prijavite se 
+<a href="index.jsp">tukaj.</a>
+<%} else {
+%>
+Pozdravljen/a <%=session.getAttribute("userid")%>
+<a href='logout.jsp'>Odjava</a>
+<%
+    }
+%>

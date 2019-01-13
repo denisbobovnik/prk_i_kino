@@ -1,0 +1,147 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	<title>Zaposlitev</title>
+	<meta charset="utf-8">
+	<link rel="icon" href="http://dzyngiri.com/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="http://dzyngiri.com/favicon.png" type="image/x-icon" />
+    <meta name="description" content="Codester is a free responsive Bootstrap template by Dzyngiri">
+    <meta name="keywords" content="free, template, bootstrap, responsive">
+    <meta name="author" content="Inbetwin Networks">  
+	<link rel="stylesheet" href="css/bootstrap.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="css/responsive.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="css/style.css" type="text/css" media="screen">
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/superfish.js"></script>
+	<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
+	<script type="text/javascript" src="js/jquery.cookie.js"></script>   
+    
+	<script type="text/javascript">if($(window).width()>1024){document.write("<"+"script src='js/jquery.preloader.js'></"+"script>");}	</script>
+	<script>		
+		 jQuery(window).load(function() {	
+		 $x = $(window).width();		
+	if($x > 1024)
+	{			
+	jQuery("#content .row").preloader();}	
+	
+	jQuery(".list-blog li:last-child").addClass("last"); 
+	jQuery(".list li:last-child").addClass("last"); 
+
+	
+    jQuery('.spinner').animate({'opacity':0},1000,'easeOutCubic',function (){jQuery(this).css('display','none')});	
+  		  }); 
+					
+	</script>
+
+	<!--[if lt IE 8]>
+  		<div style='text-align:center'><a href="http://www.microsoft.com/windows/internet-explorer/default.aspx?ocid=ie6_countdown_bannercode"><img src="http://www.theie6countdown.com/img/upgrade.jpg"border="0"alt=""/></a></div>  
+ 	<![endif]-->
+	<!--[if (gt IE 9)|!(IE)]><!-->
+	<!--<![endif]-->
+	<!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <link rel="stylesheet" href="css/docs.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="css/ie.css" type="text/css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400' rel='stylesheet' type='text/css'>
+  <![endif]-->
+  
+  <!--Google analytics code-->	  
+	  <script type="text/javascript">
+           var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-29231762-1']);
+          _gaq.push(['_setDomainName', 'dzyngiri.com']);
+          _gaq.push(['_trackPageview']);
+        
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+      </script>
+	</head>
+
+	<body>
+<div class="spinner"></div>
+<!--  header  -->
+	<header>
+
+        <div style="background-color:rgb(150, 18, 18)" class="container clearfix">
+    <div style="background-color:rgb(150, 18, 18)" class="row">
+          <div class="span12">
+        <div class="navbar navbar_">
+              <div class="container">
+              <h1 class="brand brand_"><a href="index.jsp"><img alt="logo" src="img/logo.png" width="300px" height="100px"></a></h1>
+            <a class="btn btn-navbar btn-navbar_" data-toggle="collapse" data-target=".nav-collapse_">Menu <span class="icon-bar"></span> </a>
+            
+            <div class="nav-collapse nav-collapse_  collapse">
+              <ul class="nav sf-menu">
+              
+              <%if (session.getAttribute("email") == "admin@kolosej.si") {
+				%>
+					<li><a href="admin.jsp">Upravljaj</a></li>
+				<%}%>
+              
+                <li ><a href="index.jsp">Domov</a></li>
+              
+                <li ><a href="spored.jsp">Spored</a></li>
+				<li ><a href="vstopnice.jsp">Vstopnice</a></li>
+				<li ><a href="filmi.jsp">Filmi</a></li>
+				<li class="sub-menu active" ><a>Info</a>
+				       <ul>
+                    <li><a href="oPodjetju.jsp">O podjetju</a></li>
+                    <li><a href="trzenje.jsp">Trženje</a></li>
+                    <li><a href="pravnaObvestila.jsp">Pravna obvestila</a></li>
+                    <li class="active"><a href="zaposlitev.jsp">Zaposlitev</a></li>
+                    <li><a href="cookies.jsp">Piškotki</a></li>
+                    <li><a href="http://www.arena.si/bowling/">Bowling</a></li>
+                    <li><a href="http://www.arena.si/biljard/">Biljard</a></li>
+                    <li><a href="http://www.casino-rio.si/">Casino</a></li>
+
+
+                  </ul>
+                    </li>
+
+				                    				<%
+				                    				if ((session.getAttribute("email") == null) || (((String) session.getAttribute("email")).compareTo("")==0)) {
+				                    					%>
+					<li><a href="prijava.jsp">Prijava</a></li>
+				<%} else { %>
+					<li><a href="logout.jsp">Odjava</a></li>
+				<%} %>          
+                
+              </ul>
+                </div>
+          </div>
+            </div>
+      </div>
+        </div>
+  </div>
+    </header>
+<div class="bg-content">       
+  <!--  content  -->      
+   <div id="content"><div class="ic"></div>
+    <div class="container" >
+          <div class="row">
+        <article class="span12">
+         <div class="inner-1">         
+          <ul class="list-blog">
+            <li>  
+             <h1>Zaposlitev</h1>
+
+<p>Postanite del enkratne ekipe, ki jo odlikuje dinamičnost, mladost in uspešnost. Za vas imamo mesto v vrtincu zabave!</p>
+
+<p><b>Prošnje za študentsko delo v Koloseju v Ljubljani ali zabaviščnem centru Areni naslovite na:</b> <a href="mailto:edita.susman@kolosej.si">edita.susman@kolosej.si</a></p>
+                        
+                                      
+          </ul>
+          </div>  
+        </article>
+        
+      </div>
+     </div>
+  </div>
+ </div>
+<%@include file="footer.jsp"%>

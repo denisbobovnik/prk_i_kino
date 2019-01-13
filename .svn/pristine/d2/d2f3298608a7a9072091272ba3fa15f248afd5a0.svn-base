@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	<title>TrĹľenje</title>
+	<meta charset="utf-8">
+	<link rel="icon" href="http://dzyngiri.com/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="http://dzyngiri.com/favicon.png" type="image/x-icon" />
+    <meta name="description" content="Codester is a free responsive Bootstrap template by Dzyngiri">
+    <meta name="keywords" content="free, template, bootstrap, responsive">
+    <meta name="author" content="Inbetwin Networks">  
+	<link rel="stylesheet" href="css/bootstrap.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="css/responsive.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="css/style.css" type="text/css" media="screen">
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/superfish.js"></script>
+	<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
+	<script type="text/javascript" src="js/jquery.cookie.js"></script>   
+    
+	<script type="text/javascript">if($(window).width()>1024){document.write("<"+"script src='js/jquery.preloader.js'></"+"script>");}	</script>
+	<script>		
+		 jQuery(window).load(function() {	
+		 $x = $(window).width();		
+	if($x > 1024)
+	{			
+	jQuery("#content .row").preloader();}	
+	
+	jQuery(".list-blog li:last-child").addClass("last"); 
+	jQuery(".list li:last-child").addClass("last"); 
+
+	
+    jQuery('.spinner').animate({'opacity':0},1000,'easeOutCubic',function (){jQuery(this).css('display','none')});	
+  		  }); 
+					
+	</script>
+
+	<!--[if lt IE 8]>
+  		<div style='text-align:center'><a href="http://www.microsoft.com/windows/internet-explorer/default.aspx?ocid=ie6_countdown_bannercode"><img src="http://www.theie6countdown.com/img/upgrade.jpg"border="0"alt=""/></a></div>  
+ 	<![endif]-->
+	<!--[if (gt IE 9)|!(IE)]><!-->
+	<!--<![endif]-->
+	<!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <link rel="stylesheet" href="css/docs.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="css/ie.css" type="text/css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400' rel='stylesheet' type='text/css'>
+  <![endif]-->
+  
+  <!--Google analytics code-->	  
+	  <script type="text/javascript">
+           var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-29231762-1']);
+          _gaq.push(['_setDomainName', 'dzyngiri.com']);
+          _gaq.push(['_trackPageview']);
+        
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+      </script>
+	</head>
+
+	<body>
+<div class="spinner"></div>
+<!--  header  -->
+<header>
+      <div style="background-color:rgb(150, 18, 18)" class="container clearfix">
+    <div style="background-color:rgb(150, 18, 18)" class="row">
+          <div class="span12">
+        <div class="navbar navbar_">
+              <div class="container">
+            <h1 class="brand brand_"><a href="index.html"><img alt="logo" src="img/logo.png" width="300px" height="100px"></a></h1>
+                     <a class="btn btn-navbar btn-navbar_" data-toggle="collapse" data-target=".nav-collapse_">Menu <span class="icon-bar"></span> </a>
+            
+            <div class="nav-collapse nav-collapse_  collapse">
+                  <ul class="nav sf-menu">
+                <li ><a href="index.html">Domov</a></li>
+              
+                <li ><a href="spored.html">Spored</a></li>
+				<li ><a href="vstopnice.html">Vstopnice</a></li>
+				<li><a href="filmi.html">Filmi</a></li>
+				<li class="sub-menu active" ><a>Info</a>
+				       <ul>
+                    <li><a href="O_podjetju.html">O podjetju</a></li>
+                    <li class="active"><a href="Trzenje.html">Trženje</a></li>
+                    <li><a href="Pravna_obvestila.html">Pravna obvestila</a></li>
+                    <li><a href="Zaposlitev.html">Zaposlitev</a></li>
+                    <li><a href="Cookies.html">Piškotki</a></li>
+                    <li><a href="http://www.arena.si/bowling/">Bowling</a></li>
+                    <li><a href="http://www.arena.si/biljard/">Biljard</a></li>
+                    <li><a href="http://www.casino-rio.si/">Casino</a></li>
+
+
+                  </ul>
+                    </li>
+ 
+				<li><a href="Prijava.html">Prijava</a></li>               
+                
+              </ul>
+                </div>
+          </div>
+            </div>
+      </div>
+        </div>
+  </div>
+    </header>
+<div class="bg-content">       
+  <!--  content  -->      
+   <div id="content"><div class="ic"></div>
+    <div class="container" >
+          <div class="row">
+        <article class="span12">
+         <div class="inner-1">         
+          <ul class="list-blog">
+            <li>  
+            <h1>TrĹľenje </h1>  
+                      
+            <h5>Kolosej danes</h5>   
+             	<br>
+
+ <p>Kino je med najbolj uÄŤinkovitimi mediji za komunikacijo z najstniki in mlajĹˇimi odraslimi. Kino kot medij ima v Sloveniji kratko zgodovino, saj je ta veÄŤinoma
+povezana z nastankom kinocentrov - prvi je nastal v Sloveniji spomladi leta 2001, ko smo v ljubljanskem BTC-ju odprli prvi Kolosej, do danes pa se lahko pohvalimo s celo
+mreĹľo kinocentrov. S hiĹˇami v znamenju vrtinca zabave, ki stojijo v Ljubljani in Kranju, vam lahko ponudimo edinstveno priloĹľnost, da se kino
+obiskovalcem pribliĹľate na nov, sveĹľ naÄŤin skoraj povsod po Sloveniji. Ponudbo smo v letu 2006 popestrili z odprtjem edinstvenih dvoran XPAND v zabaviĹˇÄŤnem centru Arena, ki zdruĹľuje 3D kino ter posebne uÄŤinke. Ogled filmov v 3D tehniki pa obiskovalcem nudimo tudi v Kranju.</p>
+
+
+<p>Vas zanimajo trendi s podroÄŤja ogledovanja filmov v kinu,
+struktura in navade kino obiskovalcev, njihov Ĺľivljenjski slog?
+Oglejte si rezultate raziskave, ki smo jo opravili za izhodiĹˇÄŤe za
+pripravo marketinĹˇkih akcij.</p>
+
+    <h5>Kino: neizpodbitna dejstva</h5>
+
+
+<p>
+V povpreÄŤju si v Kolosejevih kinocentrih (v Ljubljani, Mariboru in
+Kranju ter v kinu Komuna v Ljubljani) filme
+meseÄŤno ogleda 200.000 obiskovalcev.</p>
+<p>
+NajveÄŤji deleĹľ obiskovalcev (20%) kino obiĹˇÄŤe enkrat meseÄŤno. Vsaj
+enkrat tedensko gre v kino 4% obiskovalcev, 12% si film v kinu ogleda
+enkrat na 14 dni.</p>
+<p>
+V skupini, ki si film v kinu ogleda dvakrat na mesec ali pogosteje
+(16% v vzorcu), so nadpovpreÄŤno zastopani mlajĹˇi od 24 let, torej Ĺˇe
+vedno ĹˇolajoÄŤi se ali Ĺˇtudentje.</p>
+<p>
+Obiskovalci gredo najpogosteje v kino v petek, soboto ali
+nedeljo. Manj obiÄŤajna dneva za obisk kina (torej kadar ne gredo ob
+koncu tedna) sta sreda (14%) in ÄŤetrtek (10% navedb).</p>
+<p>
+VeÄŤina obiskovalcev natanÄŤno ve, kateri film si Ĺľelijo ogledati.</p>
+<p>
+Najbolj priljubljena filmska zvrst ne glede na spol je komedija,
+saj jo je skoraj polovica obiskovalcev navedla najprej, dodatnih 30%
+pa na ostalih mestih. Slabi petini (19%) je najljubĹˇa zvrst akcijski
+film, skupen deleĹľ navedb akcijskega filma pa deseĹľe skoraj polovico
+(43%). </p>
+<p>
+Neodvisne tuje raziskave kaĹľejo, da je med AngleĹľi priklic oglasa
+v kinu do petkrat veÄŤji kot na televiziji.</p>
+<p>
+Kino obiskovalci so pustolovskega duha, mnenjski vodje in
+inovatorji.</p>
+
+
+
+<p><small>Vir: CATI in Pearl&amp;Dean, april 2004, januar 2007;
+prodaja kino vstopnic v letu 2006.</small></p>             
+                        
+                                      
+          </ul>
+          </div>  
+        </article>
+        
+      </div>
+     </div>
+  </div>
+ </div>
+
+<!--  footer  -->
+<footer>
+      <div class="container clearfix">
+    <ul class="list-social pull-right">
+          <li><a class="icon-1" href="https://www.facebook.com/kolosej/?ref=br_rs"></a></li>
+          <li><a class="icon-3" href="https://twitter.com/Kololsej"></a></li>
+          <li><a class="icon-4" href="https://plus.google.com/108153274739255737478"></a></li>
+        </ul>
+    <div class="privacy pull-left">&copy; 2017 Reit d.o.o all rights reserved</div>
+  </div>
+    </footer>
+<script type="text/javascript" src="js/bootstrap.js"></script>
+</body>
+</html>

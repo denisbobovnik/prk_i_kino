@@ -1,0 +1,190 @@
+package si.um.feri.praktikum;
+
+import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Calendar;
+import org.w3c.dom.*;
+import org.xml.sax.SAXException;
+import javax.xml.parsers.*;
+
+public class PosodobitevBaze {
+	public static void main() {
+		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection con = DriverManager.getConnection(
+					"jdbc:mysql://svizec2.informatika.uni-mb.si:3306/s4p3_kino?autoReconnect=true&useSSL=false",
+					"s4p3_kino", "v345qc");
+			Statement st = con.createStatement();
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			Document doc = db.parse(new URL("http://www.kolosej.si/spored/xml/2.0/").openStream());
+			NodeList listOfMovies = doc.getElementsByTagName("movie");
+
+			/* pridobi vse filme in jih shrani v arraylist */
+			ResultSet vsiFilmiVBazi = st.executeQuery("select movie_id from movies");
+			ArrayList<String> idjiFilmov = new ArrayList<String>();
+			while (vsiFilmiVBazi.next())
+				idjiFilmov.add(vsiFilmiVBazi.getString(1));
+
+			Node firstMovieNode, firstShowNode;
+			Element firstMovieElement, posterElement, firstShowElement;
+			String kolosejevID, poster, kolosejevIDshowa;
+			ResultSet trenutniFilm, obstojecePredstave;
+			String[] tagi = { "title", "original_title", "genre", "url", "director", "writer", "distributor", "localization", "plot_outline" };
+			String[] vrednosti = new String[tagi.length];
+			String[] tagiSPreverjanjem = { "punchline", "producer", "cast", "language", "country" };
+			String[] vrednostiTagovSPreverjanjem = new String[tagiSPreverjanjem.length];
+			String[] stevilcniTagi = { "year", "duration" };
+			int[] vrednostiStevilcnihTagov = new int[stevilcniTagi.length];
+			NodeList posterList, textPOSTList, listOfShows;
+			PreparedStatement ls = con.prepareStatement("SELECT movies_id, movie_id FROM movies WHERE movie_id = ?");
+			int idFilma = 0;
+			String[] tagiShowa = { "date", "time", "city", "center", "theater" };
+			String[] vrednostiShowa = new String[tagiShowa.length];
+			SimpleDateFormat formatCasa = new SimpleDateFormat("HH:mm:ss");
+			Calendar koledar = Calendar.getInstance();
+			Timestamp timestamp;
+			SimpleDateFormat formatDatuma = new SimpleDateFormat("yyyy-MM-dd");
+			java.util.Date dateParse;
+			PreparedStatement psi = con.prepareStatement("UPDATE movies SET na_voljo = ? WHERE movie_id = ?");
+		
+			for (int i = 0; i < listOfMovies.getLength(); i++) {
+				firstMovieNode = listOfMovies.item(i);
+				if (firstMovieNode.getNodeType() == Node.ELEMENT_NODE) {
+					firstMovieElement = (Element) firstMovieNode;
+					kolosejevID = firstMovieNode.getAttributes().getNamedItem("id").getNodeValue();
+					
+					/*
+					 * če je nek prebran film že v seznamu, ga odstrani iz
+					 * seznama (torej je še na voljo)
+					 */
+					if (idjiFilmov.contains(kolosejevID))
+						idjiFilmov.remove(kolosejevID);
+
+					for (int stevecTagov = 0; stevecTagov < tagi.length; stevecTagov++)
+						vrednosti[stevecTagov] = preberiIzXML(firstMovieElement, tagi[stevecTagov]);
+
+					for (int stevecTagov = 0; stevecTagov < tagiSPreverjanjem.length; stevecTagov++)
+						vrednostiTagovSPreverjanjem[stevecTagov] = preberiIzXMLterPreveri(firstMovieElement, tagiSPreverjanjem[stevecTagov]);
+
+					for (int stevecTagov = 0; stevecTagov < stevilcniTagi.length; stevecTagov++)
+						vrednostiStevilcnihTagov[stevecTagov] = preberiStevilcneVrednostiIzXML(firstMovieElement, stevilcniTagi[stevecTagov]);
+					
+					posterList = firstMovieElement.getElementsByTagName("poster");
+					if (posterList.getLength() != 0) {
+						posterElement = (Element) posterList.item(0);
+						textPOSTList = posterElement.getChildNodes();
+						poster = ((Node) textPOSTList.item(0)).getNodeValue().trim();
+					} else
+						poster = "";
+
+					/* vnos v bazo */
+					/*
+					 * vsi filmi, ki se na na novo vnesejo, so po privzetem na
+					 * voljo
+					 */
+					new MovieDao().insertMovie(new Movie(0, kolosejevID, vrednosti[0], vrednosti[1], vrednostiTagovSPreverjanjem[0], " ", vrednosti[2], vrednostiStevilcnihTagov[0], vrednostiStevilcnihTagov[1], 
+							vrednosti[3], poster, vrednosti[4], vrednostiTagovSPreverjanjem[1], vrednosti[5], vrednostiTagovSPreverjanjem[2], vrednosti[6],
+							vrednostiTagovSPreverjanjem[3], vrednostiTagovSPreverjanjem[4], vrednosti[7], vrednosti[8], 0, 0, true));
+
+					ls.setString(1, kolosejevID);
+					trenutniFilm = ls.executeQuery();
+					while (trenutniFilm.next())
+						idFilma = trenutniFilm.getInt(1);
+
+					listOfShows = firstMovieElement.getElementsByTagName("show");
+					show: for (int k = 0; k < listOfShows.getLength(); k++) {
+						firstShowNode = listOfShows.item(k);
+						if (firstShowNode.getNodeType() == Node.ELEMENT_NODE) {
+							firstShowElement = (Element) firstShowNode;
+							kolosejevIDshowa = firstShowNode.getAttributes().getNamedItem("id").getNodeValue();
+
+							/*
+							 * izloči duplikatni vnos iz XML-a (continue skoči
+							 * na naslednjo iteracijo zunanje zanke s pomočjo
+							 * labele)
+							 * 
+							 * to preverjanje malce pospeši parsanje, saj preskoči show (podatki se ne smejo več spreminjat naknadno)
+							 * pri filmih sem to preverjanje izključil, saj ni parse prišel do showov če je kr skipalo film (showi se pa spreminjajo)
+							 * po potrbi lahko tudi tega izključimo (le malce dlje bo trajal parse)
+							 */
+							obstojecePredstave = st.executeQuery("select show_id from shows");
+							while (obstojecePredstave.next())
+								if (obstojecePredstave.getString(1).compareTo(kolosejevIDshowa) == 0)
+									continue show;
+
+							for (int stevecTagov = 0; stevecTagov < tagiShowa.length; stevecTagov++)
+								vrednostiShowa[stevecTagov] = preberiIzXML(firstShowElement, tagiShowa[stevecTagov]);
+
+							koledar.setTime(formatCasa.parse(vrednostiShowa[1]));
+							timestamp = new Timestamp(koledar.getTimeInMillis());
+							dateParse = formatDatuma.parse(vrednostiShowa[0]);
+							timestamp.setYear(dateParse.getYear());
+							timestamp.setMonth(dateParse.getMonth());
+							timestamp.setDate(dateParse.getDate());
+
+							/* vnos v bazo */
+							new ShowDao().insertShow2(new Show(0, kolosejevIDshowa, timestamp, vrednostiShowa[2], vrednostiShowa[3], vrednostiShowa[4], idFilma));
+						}
+					}
+				}
+			}
+			System.out.println("Podatki so uspešno preneseni v bazo!");
+
+			/*
+			 * preostale filme v seznamu nastavimo na false (niso več na voljo v
+			 * XML)
+			 */
+			for (String s : idjiFilmov) {
+				psi.setBoolean(1, false);
+				psi.setString(2, s);
+				psi.executeUpdate();
+			}
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ParserConfigurationException e) {
+			e.printStackTrace();
+		} catch (SAXException e) {
+			e.printStackTrace();
+		} catch (Exception err) {
+			System.out.println(" " + err.getMessage());
+		}
+	}
+
+	public static String preberiIzXML(Element firstElement, String prejetTag) {
+		NodeList tagList = firstElement.getElementsByTagName(prejetTag);
+		Element tagElement = (Element) tagList.item(0);
+		NodeList textTAGList = tagElement.getChildNodes();
+		String vrnjenTag = ((Node) textTAGList.item(0)).getNodeValue().trim();
+		return vrnjenTag.replace("'", "\'");
+	}
+
+	public static String preberiIzXMLterPreveri(Element firstElement, String prejetTag) {
+		NodeList tagList = firstElement.getElementsByTagName(prejetTag);
+		Element tagElement = (Element) tagList.item(0);
+		NodeList textTAGList = tagElement.getChildNodes();
+		Text tagCheckedText = (Text) textTAGList.item(0);
+		if (tagCheckedText == null) {
+			Document doc = tagElement.getOwnerDocument();
+			tagCheckedText = doc.createTextNode(prejetTag);
+			tagElement.appendChild(tagCheckedText);
+			tagCheckedText.setTextContent("");
+		}
+		String vrnjenTag = tagCheckedText.getWholeText();
+		return vrnjenTag.replace("'", "\'");
+	}
+
+	public static int preberiStevilcneVrednostiIzXML(Element firstElement, String prejetTag) {
+		NodeList tagList = firstElement.getElementsByTagName(prejetTag);
+		Element tagElement = (Element) tagList.item(0);
+		NodeList textTAGList = tagElement.getChildNodes();
+		return Integer.parseInt(((Node) textTAGList.item(0)).getNodeValue().trim());
+	}
+}

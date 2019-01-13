@@ -1,0 +1,19 @@
+<!-- footer -->
+<footer>
+      <div class="container clearfix">
+    <ul class="list-social pull-right">
+          <li><a class="icon-1" href="https://www.facebook.com/kolosej/?ref=br_rs"></a></li>
+          <li><a class="icon-3" href="https://twitter.com/Kololsej"></a></li>
+          <li><a class="icon-4" href="https://plus.google.com/108153274739255737478"></a></li>
+        </ul>
+     <div class="privacy pull-left">&copy; 2017 Inter 32 all rights reserved</div>
+  </div>
+    </footer>
+<script type="text/javascript" src="js/bootstrap.js"></script>
+<!-- <script>
+	var izrazi = ["Jejžšna!", "Hudimana!", "Glej ga, zlomka!", "Gromska strela!", "Krščenduš!", "Sveta Marija pomagavka!", "Tristo kosmatih medvedov!"];
+	var izbranIzraz = izrazi[Math.floor((Math.random() * izrazi.length))];
+	document.getElementById("izraz").innerHTML = izbranIzraz;
+</script>-->
+</body>
+</html>

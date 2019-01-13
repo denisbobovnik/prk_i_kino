@@ -1,0 +1,188 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="si.um.feri.praktikum.MovieDao"%>
+<%@page import="si.um.feri.praktikum.Movie"%>
+<%@page import="si.um.feri.praktikum.ShowDao"%>
+<%@page import="si.um.feri.praktikum.Show"%>
+<%@page import="si.um.feri.praktikum.PosodobitevBaze"%>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	<title>Kolosej</title>
+	<meta charset="utf-8" >
+	<link rel="icon" href="http://dzyngiri.com/favicon.png" type="image/x-icon">
+	<link rel="stylesheet" href="css/bootstrap.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="responsive.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="style.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="css/touchTouch.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="css/kwicks-slider.css" type="text/css" media="screen">
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+	<script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/superfish.js"></script>
+	<script type="text/javascript" src="js/jquery.flexslider-min.js"></script>
+	<script type="text/javascript" src="js/jquery.kwicks-1.5.1.js"></script>
+	<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
+	<script type="text/javascript" src="js/jquery.cookie.js"></script>    
+	<script type="text/javascript" src="js/touchTouch.jquery.js"></script>
+	<script type="text/javascript">if($(window).width()>1024){document.write("<"+"script src='js/jquery.preloader.js'></"+"script>");}	</script>
+
+	<script>		
+		 jQuery(window).load(function() {	
+		 $x = $(window).width();		
+	if($x > 1024)
+	{			
+	jQuery("#content .row").preloader();    }	
+		 
+     jQuery('.magnifier').touchTouch();			
+    jQuery('.spinner').animate({'opacity':0},1000,'easeOutCubic',function (){jQuery(this).css('display','none')});	
+  		  }); 
+				
+	</script>
+
+	
+</head>
+		<body>
+	
+			<%
+		new PosodobitevBaze().main();
+		%>
+	
+    <div class="spinner" style="left: -52px; top: -233px"></div> 
+<!-- header start -->
+<header>
+
+        <div style="background-color:rgb(150, 18, 18)" class="container clearfix">
+    <div style="background-color:rgb(150, 18, 18)" class="row">
+          <div class="span12">
+        <div class="navbar navbar_">
+              <div class="container">
+            <h1 class="brand brand_"><a href="index.html"><img alt="logo" src="img/logo.png" width="300px" height="100px"></a></h1>
+       
+            <a class="btn btn-navbar btn-navbar_" data-toggle="collapse" data-target=".nav-collapse_">Menu <span class="icon-bar"></span> </a>
+            
+            <div class="nav-collapse nav-collapse_  collapse">
+              <ul class="nav sf-menu">
+                <li class="active"><a href="index.jsp">Domov</a></li>
+              
+                <li ><a href="spored.jsp">Spored</a></li>
+				<li ><a href="vstopnice.jsp">Vstopnice</a></li>
+				<li ><a href="filmi.jsp">Filmi</a></li>
+				<li class="sub-menu active" ><a>Info</a>
+				       <ul>
+                    <li><a href="oPodjetju.jsp">O podjetju</a></li>
+                    <li><a href="trzenje.jsp">Trženje</a></li>
+                    <li><a href="pravnaObvestila.jsp">Pravna obvestila</a></li>
+                    <li><a href="zaposlitev.jsp">Zaposlitev</a></li>
+                    <li><a href="cookies.jsp">Piškotki</a></li>
+                    <li><a href="http://www.arena.si/bowling/">Bowling</a></li>
+                    <li><a href="http://www.arena.si/biljard/">Biljard</a></li>
+                    <li><a href="http://www.casino-rio.si/">Casino</a></li>
+
+
+                  </ul>
+                    </li>
+
+				                    				<%
+				if ((session.getAttribute("email") == null) || (session.getAttribute("email") == "")) {
+				%>
+					<li><a href="prijava.jsp">Prijava</a></li>
+				<%} else { %>
+					<li><a href="logout.jsp">Odjava</a></li>
+				<%} %>          
+                
+              </ul>
+                </div>
+          </div>
+            </div>
+      </div>
+        </div>
+  </div>
+    </header>
+<div class="bg-content">
+      <div class="container">
+    <div class="row">
+          <div class="span12"> 
+        <!-- slider -->
+        <div class="flexslider">
+              <ul class="slides">
+           <% MovieDao od=new MovieDao(); %>
+           <% int x = 0; %>
+           <% for (Movie o :od.select()) { %>
+           
+           <% if(x <= 4){ %>
+           <li><a href="film.jsp?poslji=<%=o.getBazniID() %>" ><img alt="" src="<%=o.getPoster()%>" style="width:770px;height:350px;"></a></li>
+           <% x++; %>
+           <% } %> 
+           <% } %> 
+          </ul>
+            </div>
+        <span id="responsiveFlag"></span>
+       
+      </div>
+        </div>
+  </div>
+      
+      <!-- content -->
+      
+      <div id="content" class="content-extra"><div class="ic"></div>
+    <div class="row-1">
+        <div class="container">
+    		<div class="row">
+        <article class="span12">
+        <h4 style="color:rgb(150, 18, 18);">Aktualni spored</h4>
+         </article>
+        <div class="clear"></div>
+         <ul class="portfolio clearfix">           
+           <%// MovieDao od=new MovieDao(); %>
+           <% int b = 0; %>
+           <% for (Movie o :od.select()) { %>
+           
+           <% if(b <= 9){ %>
+           <li class="box" style="width:200px;height:330px;"><a href="film.jsp?poslji=<%=o.getBazniID() %>" ><img alt="" src="<%=o.getPoster()%>" style="width:200px;height:270px;"><h5><%=o.getTitle() %></h5></a></li>
+           <% b++; %>
+           <% } %> 
+           <% } %>                     
+         </ul> 
+      </div>
+     	</div>
+    </div>
+    
+       
+    <div class="container">
+          <div class="row">
+        <article class="span8">
+              <h3 style="color:rgb(150, 18, 18);">O nas</h3>
+              <div class="wrapper">
+            <figure class="img-indent"><img src="img/kolosej_stavba.jpg" width="350px" height="450px" alt="stavba" ></figure>
+            <div class="inner-1 overflow extra">
+                  <div class="txt-1">Ko govorimo o kinematografiji na Slovenskem, ne moremo mimo Koloseja.
+                   V zadnjem desetletju je podjetje na prikazovalskem trgu pustilo močan pečat, saj je na 
+                   slovenska tla prineslo številne inovacije s tega področja - tehnološke in konceptualne
+                    spremembe v načinu preživljanja prostega časa v kombinaciji z ogledom filma na velikem 
+                    kino platnu. Kolosej je leta 2001 odprl prvi kinocenter v Sloveniji - odtlej je na naših 
+                    tleh zraslo kar nekaj podobnih. </div>
+                </div>
+          </div>
+            </article>
+        <article class="span4">
+              <h3 style="color:rgb(150, 18, 18);">Informacije</h3>
+                <div class="wrapper">
+                  <ul class="list list-pad">
+                          <li><a class="ainfo" href="o_podjetju.html">O podjetju</a></li>
+                          <li><a class="ainfo" href="Trzenje.html">Trženje</a></li>
+                          <li><a class="ainfo" href="Pravna_obvestila.html">Pravna obvestila</a></li>
+                          <li><a class="ainfo" href="Zaposlitev.html">Zaposlitev</a></li>
+                          
+                        </ul>
+                    <ul class="list list-pad">
+                          <li><a class="ainfo" href="Cookies.html">Piškotki</a></li>                        
+                          <li><a class="ainfo" href="http://www.arena.si/bowling/">Bowling</a></li>
+                          <li><a class="ainfo" href="http://www.arena.si/biljard/">Biljard</a></li>
+                           <li><a class="ainfo" href="http://www.casino-rio.si/">Fit Inn</a></li>
+                        </ul>
+                </div>
+            </article>
+      </div>
+        </div>
+  </div>
+    </div>
+<%@include file="footer.jsp"%>

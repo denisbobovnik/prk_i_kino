@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+	<Resource name="jdbc/praktikum"
+            auth="Container"
+            type="javax.sql.DataSource"
+            username="s4p3_kino"
+            password="v345qc"
+            driverClassName="com.mysql.jdbc.Driver"
+            url="jdbc:mysql://svizec2.informatika.uni-mb.si:3306/s4p3_kino"
+            maxActive="8"
+            maxIdle="4"/>
+
+</Context>

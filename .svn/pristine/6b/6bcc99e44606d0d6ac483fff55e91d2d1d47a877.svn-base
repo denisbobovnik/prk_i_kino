@@ -1,0 +1,113 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="si.um.feri.praktikum.MovieDao"%>
+<%@page import="si.um.feri.praktikum.Movie"%>
+<%@page import="si.um.feri.praktikum.ShowDao"%>
+<%@page import="si.um.feri.praktikum.Show"%>
+<%@page import="java.util.*"%>
+<%@include file="header.jsp"%>
+<div class="bg-content">
+  <div class="container">
+    <div class="row">
+       <div class="span12"> 
+        <!-- slider -->
+        <div class="flexslider">
+          <ul class="slides">
+           <% MovieDao od=new MovieDao(); %>
+           <% int x = 0; 
+              Stack st = new Stack();
+           %>
+           <% for (Movie o :od.selectMovie()) { %>
+           <% boolean a = o.isNa_voljo(); %>
+           <% if(a == true){ %>
+           <% st.push(o); %>
+           <% x++;%> 
+           <% } %>
+           <% } %>
+           <% for(int i = 0; i<5; i++){
+        	   Movie a = (Movie) st.pop();%>
+        	   <li><a href="film.jsp?poslji=<%=a.getBazniID() %>" ><img alt="" src="<%=a.getPoster()%>" style="width:770px;height:350px;"></a></li>
+           <% } %>
+           
+           
+            
+          </ul>
+         </div>
+        <span id="responsiveFlag"></span>
+       
+      </div>
+    </div>
+    
+  </div>
+      
+      <!-- content -->
+      
+      <div id="content" class="content-extra"><div class="ic"></div>
+    <div class="row-1">
+        <div class="container">
+    		<div class="row">
+        <article class="span12">
+        <h4 style="color:rgb(150, 18, 18);">Aktualni spored</h4>
+         </article>
+        <div class="clear"></div>
+         <ul class="portfolio clearfix">           
+           
+           <% int b = 0; 
+              List<Movie> mov = new ArrayList();%>
+           <% for (Movie o :od.selectMovie()) { %>
+           <% boolean a = o.isNa_voljo(); %>
+           <% if(a == true){ %>
+           <% mov.add(o); %>
+           <% } %>
+           <% } %>
+           <% Collections.shuffle(mov);%>
+           <% for(Movie ab : mov){ %>
+           <% if(b <= 9){ %>
+           	  <li class="box" style="width:200px;height:330px;"><a href="film.jsp?poslji=<%=ab.getBazniID() %>" ><img alt="" src="<%=ab.getPoster()%>" style="width:200px;height:270px;"><h5><%=ab.getTitle() %></h5></a></li>
+           <% b++; %>
+           <% } %> 
+           <% } %>                     
+         </ul> 
+      </div>
+     	</div>
+    </div>
+    
+       
+    <div class="container">
+          <div class="row">
+        <article class="span8">
+              <h3 style="color:rgb(150, 18, 18);">O nas</h3>
+              <div class="wrapper">
+            <figure class="img-indent"><img src="img/kolosej_stavba.jpg" width="350px" height="450px" alt="stavba" ></figure>
+            <div class="inner-1 overflow extra">
+                  <div class="txt-1">Ko govorimo o kinematografiji na Slovenskem, ne moremo mimo Koloseja.
+                   V zadnjem desetletju je podjetje na prikazovalskem trgu pustilo močan pečat, saj je na 
+                   slovenska tla prineslo številne inovacije s tega področja - tehnološke in konceptualne
+                    spremembe v načinu preživljanja prostega časa v kombinaciji z ogledom filma na velikem 
+                    kino platnu. Kolosej je leta 2001 odprl prvi kinocenter v Sloveniji - odtlej je na naših 
+                    tleh zraslo kar nekaj podobnih. </div>
+                </div>
+          </div>
+            </article>
+        <article class="span4">
+              <h3 style="color:rgb(150, 18, 18);">Informacije</h3>
+                <div class="wrapper">
+                  <ul class="list list-pad">
+                          <li><a class="ainfo" href="o_podjetju.html">O podjetju</a></li>
+                          <li><a class="ainfo" href="Trzenje.html">Trženje</a></li>
+                          <li><a class="ainfo" href="Pravna_obvestila.html">Pravna obvestila</a></li>
+                          <li><a class="ainfo" href="Zaposlitev.html">Zaposlitev</a></li>
+                          
+                        </ul>
+                    <ul class="list list-pad">
+                          <li><a class="ainfo" href="Cookies.html">Piškotki</a></li>                        
+                          <li><a class="ainfo" href="http://www.arena.si/bowling/">Bowling</a></li>
+                          <li><a class="ainfo" href="http://www.arena.si/biljard/">Biljard</a></li>
+                           <li><a class="ainfo" href="http://www.casino-rio.si/">Fit Inn</a></li>
+                        </ul>
+                </div>
+            </article>
+      </div>
+        </div>
+  </div>
+    </div>
+<%@include file="footer.jsp"%>

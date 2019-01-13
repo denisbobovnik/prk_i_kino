@@ -1,0 +1,2 @@
+URL: http://svizec2.informatika.uni-mb.si:8080/kino/index.jsp
+Zadnja namestitev: 11.6.2017 22:13

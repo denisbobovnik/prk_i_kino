@@ -1,0 +1,101 @@
+<%@page import="si.um.feri.praktikum.MovieDao"%>
+<%@page import="si.um.feri.praktikum.Movie"%>
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>Vnos podatkov</title>
+	</head>
+	
+	<body>
+		<h1>Seznam podatkov</h1>
+		
+		<a href="kinoVnos.jsp">Dodajanje</a>
+			
+		<%
+			MovieDao od=new MovieDao();
+			
+			if (request.getParameter("izbrisi")!=null) {
+				int id=Integer.parseInt(request.getParameter("izbrisi"));
+				od.delete(id); 
+			}
+			
+			if (request.getParameter("vnos")!=null) {
+				//od.insert(new Movie(request.getParameter("naziv"),request.getParameter("cena"),request.getParameter("vrsta"),request.getParameter("link"),0));
+				od.insert(new Movie(0,request.getParameter("movie_id"),request.getParameter("title"),request.getParameter("originalTitle"),request.getParameter("punchline"),request.getParameter("genre"),Integer.parseInt(request.getParameter("year")),Integer.parseInt(request.getParameter("duration")),request.getParameter("url"),request.getParameter("poster"),request.getParameter("director"),request.getParameter("producer"),request.getParameter("writer"),request.getParameter("cast"), request.getParameter("distributor"),request.getParameter("language"),request.getParameter("country"),request.getParameter("localization"),request.getParameter("plot_outline"),Integer.parseInt(request.getParameter("sum_of_scores")),Integer.parseInt(request.getParameter("num_of_scores")),true));
+			}
+		
+		%>
+			
+		<ul>
+			<% for (Movie o :od.select()) { %>
+				<li>
+					
+					<ul>
+						<li>
+							Title: <%=o.getTitle()%>
+						</li>
+						<li>
+							Original Title: <%=o.getTitle()%>
+						</li>
+						<li>
+							Punchline: <%=o.getOriginalTitle()%>
+						</li>
+						<li>
+							Genre: <%=o.getGenre()%>
+						</li>
+						<li>
+							Year: <%=o.getYear()%>
+						</li>
+						<li>
+							Duration: <%=o.getDuration()%>
+						</li>
+						<li>
+							url: <%=o.getUrl()%>
+						</li>
+						<li>
+							
+							<img src="<%=o.getPoster()%>" style="width:100px;height:135px;"/>
+						</li>
+						<li>
+							Director: <%=o.getDirector()%>
+						</li>
+						<li>
+							Producer: <%=o.getProducer()%>
+						</li>
+						<li>
+							Writer: <%=o.getWriter()%>
+						</li>
+						<li>
+							Cast: <%=o.getCast()%>
+						</li>
+						<li>
+							Distributor: <%=o.getDistributor()%>
+						</li>
+						<li>
+							Language: <%=o.getLanguage()%>
+						</li>
+						<li>
+							Plot Outline: <%=o.getPlotOutline()%>
+						</li>
+						<li>
+							Sum of Scores: <%=o.getSumOfScores()%>
+						</li>
+						<li>
+							Num of Scores: <%=o.getNumOfScores()%>
+						</li>
+						<li>
+							Na voljo: <%=o.isNa_voljo()%>
+						</li>
+						
+					</ul>
+				</li>
+			<% } %>
+		</ul>
+	
+	</body>
+	
+</html>

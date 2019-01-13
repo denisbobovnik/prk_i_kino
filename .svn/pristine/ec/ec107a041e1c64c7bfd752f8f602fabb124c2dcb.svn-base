@@ -1,0 +1,64 @@
+package kino_test;
+
+import java.util.Date;
+
+public class Show {
+	private int bazniID, movieID;
+	private String kolosejevID, city, center, theater;
+	private Date date, time;
+
+	public int getBazniID() {
+		return bazniID;
+	}
+	public void setBazniID(int bazniID) {
+		this.bazniID = bazniID;
+	}
+	public int getMovieID() {
+		return movieID;
+	}
+	public void setMovieID(int movieID) {
+		this.movieID = movieID;
+	}
+	public String getKolosejevID() {
+		return kolosejevID;
+	}
+	public void setKolosejevID(String kolosejevID) {
+		this.kolosejevID = kolosejevID;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public String getCenter() {
+		return center;
+	}
+	public void setCenter(String center) {
+		this.center = center;
+	}
+	public String getTheater() {
+		return theater;
+	}
+	public void setTheater(String theater) {
+		this.theater = theater;
+	}
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
+	}
+	public Date getTime() {
+		return time;
+	}
+	public void setTime(Date time) {
+		this.time = time;
+	}
+
+	@Override
+	public String toString() {
+		return "Show [bazniID=" + bazniID + ", movieID=" + movieID + ", kolosejevID=" + kolosejevID + ", city=" + city
+				+ ", center=" + center + ", theater=" + theater + ", date=" + date + ", time=" + time + "]";
+	}
+}

@@ -1,0 +1,587 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="si.um.feri.praktikum.MovieDao"%>
+<%@page import="si.um.feri.praktikum.Movie"%>
+<%@page import="si.um.feri.praktikum.ShowDao"%>
+<%@page import="si.um.feri.praktikum.Show"%>
+<%@page import="si.um.feri.praktikum.Comment"%>
+<%@page import="si.um.feri.praktikum.CommentDao"%>
+<%@page import="si.um.feri.praktikum.User"%>
+<%@page import="si.um.feri.praktikum.UserDao"%>
+<%@page import="java.text.*" %>
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.ParseException"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Kolosej</title>
+	<meta charset="utf-8" >
+	<link rel="icon" href="http://dzyngiri.com/favicon.png" type="image/x-icon">
+	<link rel="stylesheet" href="css/bootstrap.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="responsive.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="style.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="css/responsive.css" type="text/css" media="screen">
+	<link rel="stylesheet" type="text/css" href="css1.css" media="screen">
+	<link rel="stylesheet" href="css/style.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="css/touchTouch.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="css/kwicks-slider.css" type="text/css" media="screen">
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+	<script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/superfish.js"></script>
+	<script type="text/javascript" src="js/jquery.flexslider-min.js"></script>
+	<script type="text/javascript" src="js/validacija.js"></script>
+	<script type="text/javascript" src="js/charactersLeft.js"></script>
+	<script type="text/javascript" src="js/jquery.kwicks-1.5.1.js"></script>
+	<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
+	<script type="text/javascript" src="js/jquery.cookie.js"></script>    
+	<script type="text/javascript" src="js/touchTouch.jquery.js"></script>
+	<script type="text/javascript">if($(window).width()>1024){document.write("<"+"script src='js/jquery.preloader.js'></"+"script>");}	</script>
+
+	<script>		
+		 jQuery(window).load(function() {	
+		 $x = $(window).width();		
+	if($x > 1024)
+	{			
+	jQuery("#content .row").preloader();    }	
+		 
+     jQuery('.magnifier').touchTouch();			
+    jQuery('.spinner').animate({'opacity':0},1000,'easeOutCubic',function (){jQuery(this).css('display','none')});	
+  		  }); 
+				
+	</script>
+
+	<style>
+
+	
+		/* Style the tab */
+		div.tab {
+		    overflow: hidden;
+		    border: 1px solid #ccc;
+		    background-color: rgb(150, 18, 18);
+		}
+		
+		/* Style the buttons inside the tab */
+		div.tab button {
+		    background-color: inherit;
+		    float: left;
+		    border: none;
+		    outline: none;
+		    cursor: pointer;
+		    padding: 14px 16px;
+		    transition: 0.3s;
+		    font-size: 17px;
+		}
+		
+		/* Change background color of buttons on hover */
+		div.tab button:hover {
+		    background-color: #87cefa;
+		}
+		
+		/* Create an active/current tablink class */
+		div.tab button.active {
+		    background-color: #87cefa;
+		}
+		
+		/* Style the tab content */
+		.tabcontent {
+		    display: none;
+		    padding: 6px 12px;
+		    border: 1px solid #ccc;
+		    border-top: none;
+		}
+	</style>
+	
+</head>
+<body>
+    <div class="spinner" style="left: -52px; top: -233px"></div> 
+<!-- header start -->
+<header>
+
+        <div style="background-color:rgb(150, 18, 18)" class="container clearfix">
+    <div style="background-color:rgb(150, 18, 18)" class="row">
+          <div class="span12">
+        <div class="navbar navbar_">
+              <div class="container">
+              <h1 class="brand brand_"><a href="index.jsp"><img alt="logo" src="img/logo.png" width="300px" height="100px"></a></h1>
+            <a class="btn btn-navbar btn-navbar_" data-toggle="collapse" data-target=".nav-collapse_">Menu <span class="icon-bar"></span> </a>
+            
+            <div class="nav-collapse nav-collapse_  collapse">
+              <ul class="nav sf-menu">
+                            <% if(session.getAttribute("email") != null) {
+                            if (((String) session.getAttribute("email")).compareTo("admin@kolosej.si")==0) {
+				%>
+					<li class="item3${pageContext.request.requestURI eq '/kino/admin.jsp' ? ' active' : ''}"><a href="admin.jsp">Upravljaj</a></li>
+				<%} }%>
+                <li class="item3${pageContext.request.requestURI eq '/kino/index.jsp' ? ' active' : ''}"><a href="index.jsp">Domov</a></li>
+              
+                <li class="item3${pageContext.request.requestURI eq '/kino/spored.jsp' ? ' active' : ''}"><a href="spored.jsp">Spored</a></li>
+				<li class="item3${pageContext.request.requestURI eq '/kino/vstopnice.jsp' ? ' active' : ''}"><a href="vstopnice.jsp">Vstopnice</a></li>
+				<li class="item3${pageContext.request.requestURI eq '/kino/filmi.jsp' ? ' active' : ''} item3${pageContext.request.requestURI eq '/kino/film.jsp' ? ' active' : ''}"><a href="filmi.jsp">Filmi</a></li>
+				<li class="item3${pageContext.request.requestURI eq '/kino/glasovanje.jsp' ? ' active' : ''}"><a href="glasovanje.jsp">Glasovanje</a></li>
+				<li class="sub-menu item3${pageContext.request.requestURI eq '/kino/oPodjetju.jsp' ? ' active' : ''}
+					item3${pageContext.request.requestURI eq '/kino/trzenje.jsp' ? ' active' : ''}
+					item3${pageContext.request.requestURI eq '/kino/pravnaObvestila.jsp' ? ' active' : ''}
+					item3${pageContext.request.requestURI eq '/kino/zaposlitev.jsp' ? ' active' : ''}
+					item3${pageContext.request.requestURI eq '/kino/cookies.jsp' ? ' active' : ''}
+					item3${pageContext.request.requestURI eq 'http://www.arena.si/bowling/' ? ' active' : ''}
+					item3${pageContext.request.requestURI eq 'http://www.arena.si/biljard/' ? ' active' : ''}
+					item3${pageContext.request.requestURI eq 'http://www.casino-rio.si/' ? ' active' : ''}" ><a>Info</a>
+				       <ul>
+                    <li class="item3${pageContext.request.requestURI eq '/kino/oPodjetju.jsp' ? ' active' : ''}"><a href="oPodjetju.jsp">O podjetju</a></li>
+                    <li class="item3${pageContext.request.requestURI eq '/kino/trzenje.jsp' ? ' active' : ''}"><a href="trzenje.jsp">Trženje</a></li>
+                    <li class="item3${pageContext.request.requestURI eq '/kino/pravnaObvestila.jsp' ? ' active' : ''}"><a href="pravnaObvestila.jsp">Pravna obvestila</a></li>
+                    <li class="item3${pageContext.request.requestURI eq '/kino/zaposlitev.jsp' ? ' active' : ''}"><a href="zaposlitev.jsp">Zaposlitev</a></li>
+                    <li class="item3${pageContext.request.requestURI eq '/kino/cookies.jsp' ? ' active' : ''}"><a href="cookies.jsp">Piškotki</a></li>
+                    <li class="item3${pageContext.request.requestURI eq 'http://www.arena.si/bowling/' ? ' active' : ''}"><a href="http://www.arena.si/bowling/">Bowling</a></li>
+                    <li class="item3${pageContext.request.requestURI eq 'http://www.arena.si/biljard/' ? ' active' : ''}"><a href="http://www.arena.si/biljard/">Biljard</a></li>
+                    <li class="item3${pageContext.request.requestURI eq 'http://www.casino-rio.si/' ? ' active' : ''}"><a href="http://www.casino-rio.si/">Casino</a></li>
+
+
+                  </ul>
+                    </li>
+
+				                    				<%
+				                    				if ((session.getAttribute("email") == null) || (((String) session.getAttribute("email")).compareTo("")==0)) {
+				                    					%>
+					<li class="item3${pageContext.request.requestURI eq '/kino/prijava.jsp' ? ' active' : ''} item3${pageContext.request.requestURI eq '/kino/registracija.jsp' ? ' active' : ''}"><a href="prijava.jsp">Prijava</a></li>
+				<%} else { %>
+					<li class="item3${pageContext.request.requestURI eq '/kino/logout.jsp' ? ' active' : ''} item3${pageContext.request.requestURI eq '/kino/registracija.jsp' ? ' active' : ''}"><a href="logout.jsp">Odjava</a></li>
+				<%} %>          
+                
+              </ul>
+                </div>
+          </div>
+            </div>
+      </div>
+        </div>
+  </div>
+    </header>
+    
+    
+    <% 
+	    request.setCharacterEncoding("UTF-8");
+	response.setCharacterEncoding("UTF-8");
+	response.setContentType("text/html;charset=UTF-8");
+	MovieDao od=new MovieDao(); %>
+    <% ShowDao sh=new ShowDao(); 
+       CommentDao cm=new CommentDao();
+       UserDao us=new UserDao();%>
+    <% //int hidden = Integer.parseInt(request.getParameter(o.getKolosejevID())); 
+    
+    if (request.getParameter("izbrisi")!=null) {
+				int id=Integer.parseInt(request.getParameter("izbrisi1"));
+				cm.deleteComment(id); 
+			}
+    
+    
+    
+    
+    
+    int user1 = 1;
+    
+    if (request.getParameter("vnosC")!=null) {
+    	for(User usr:us.selectUser()){
+    		if(usr.getEmail().compareTo(request.getParameter("email"))==0){
+    			user1 = usr.getUserID();
+    			
+    		}
+    	}
+
+    	
+    	cm.insertComment(new Comment(0,request.getParameter("comment"),Integer.parseInt(request.getParameter("movie")),user1));
+	}
+    
+    %>
+    
+    <% for (Movie o :od.selectMovie()) { %>
+    <% //int hidden = Integer.parseInt(request.getParameter(o.getKolosejevID())); %>
+    <% //if(hidden == o.getBazniID()){ %>
+    <% //Movie ret = od.select(hidden);%>
+    <% int id=Integer.parseInt(request.getParameter("poslji"));
+    //if (request.getParameter("poslji")!=null) {
+	//			int id=Integer.parseInt(request.getParameter("poslji"));
+				 
+	//		}
+    %>
+    <% if(id == o.getBazniID()){ %>
+    <div class="bg-content">
+		<div id="content" class="content-extra"><div class="ic"></div>
+    		<div class="container">
+       	    	<div class="row">
+        		<article class="span8">
+              		<h3><%=o.getTitle() %></h3>
+              		<h5><%=o.getOriginalTitle()%></h5>
+              	
+					<form name="star-rating" action="/kino/Ocenjevalnik" method="post">
+					<span class="rating">
+					    <input type="radio" value="5" class="rating-input"
+					           id="rating-input-1-5" name="rating-input-1" onchange="this.form.submit()">
+					    <label for="rating-input-1-5" class="rating-star"></label>
+					    <input type="radio" value="4" class="rating-input"
+					           id="rating-input-1-4" name="rating-input-1" onchange="this.form.submit()">
+					    <label for="rating-input-1-4" class="rating-star"></label>
+					    <input type="radio" value="3" class="rating-input"
+					           id="rating-input-1-3" name="rating-input-1" onchange="this.form.submit()">
+					    <label for="rating-input-1-3" class="rating-star"></label>
+					    <input type="radio" value="2" class="rating-input"
+					           id="rating-input-1-2" name="rating-input-1" onchange="this.form.submit()">
+					    <label for="rating-input-1-2" class="rating-star"></label>
+					    <input type="radio" value="1" class="rating-input"
+					           id="rating-input-1-1" name="rating-input-1" onchange="this.form.submit()">
+					    <label for="rating-input-1-1" class="rating-star"></label>
+					</span>
+					<input type="hidden" name="idFilma" value="<%=o.getBazniID()%>"/>
+					</form>
+					
+              		<% double num=o.getNumOfScores();
+					    		if(num==0) //prepreči deljenje z 0
+					    			num++;
+              		double sum=o.getSumOfScores();
+              		double povprecnaOcena = sum/num;
+					NumberFormat formatter = NumberFormat.getInstance(); 
+					formatter.setMaximumFractionDigits(1);	
+					formatter.setMinimumFractionDigits(1);	
+					%> 
+              		<h5><%=formatter.format(povprecnaOcena)%>/5</h5>
+              		
+              		<%String ocenili = "";
+						if(request.getAttribute("ocenili")!= null) {
+							ocenili = (String) request.getAttribute("ocenili");%>
+							<%=ocenili %>
+						<%}%>
+              		
+              		
+              		
+              		
+              		
+              			<div class="wrapper">
+            			<figure class="img-indent"><img src="<%=o.getPoster()%>" alt="" style="width:200px;height:270px;" ></figure>
+           			 		<div class="inner-1 overflow extra">
+                  				<div class="txt-1">
+                  				<br>
+                  				<%=o.getPlotOutline()%>
+                  				</div>
+                			</div>
+                			<br>
+                		<iframe style="padding:5px;" width="560" height="315" src="<%=o.getTrailer() %>" frameborder="0" allowfullscreen></iframe>
+                			
+                			
+          				</div>
+          		<br>
+          		
+          		<h3>Predstave filma:</h3>
+     					<form action="film.jsp?poslji=<%=o.getBazniID() %>" method="post">
+     					Izberi datum:&nbsp;&nbsp;<input type="date" name="showDate"><input class="btn btn-1" type="submit">
+     					</form>
+     				<% int a = o.getBazniID(); %>
+          		
+            	<div class="tab">
+  					<button class="tablinks" onclick="openCity(event, 'vsi')" id="defaultOpen">Vsi</button>
+  					<button class="tablinks" onclick="openCity(event, 'ljubljana')">Ljubljana</button>
+  					<button class="tablinks" onclick="openCity(event, 'kranj')">Kranj</button>
+  					
+				</div>
+				
+							
+				<div id="vsi" class="tabcontent">
+				<ul class="portfolio clearfix">
+				  <% for (Show s:sh.selectShow()){ %>
+								<% int b = s.getMovieID(); %>
+									<%if(a == b){ %>
+									
+									<%	if(request.getParameter("showDate")!=null){ %>
+									<%  String dare = request.getParameter("showDate");  	
+     				   					String startDateString = "06/27/2007";
+     				   					DateFormat df = new SimpleDateFormat("yyyy-MM-dd"); 
+     				   					Date startDate;
+     				   					Date ena = s.getDate();
+     				   					
+     				   					try {
+     				   					    startDate = df.parse(dare);
+     				   					    String newDateString = df.format(startDate);
+     				   					    %>
+     				   					    
+     				   					    <%if(s.getDate().compareTo(startDate)==0){ %>
+     				   					    
+											<li style="width: 200px;">
+												<p style="padding-bottom: 0px;">Mesto: <%=s.getCity() %></p>
+												<p style="padding-bottom: 0px;">Center: <%=s.getCenter() %></p>
+												<p style="padding-bottom: 0px;">Dvorana: <%=s.getTheater() %></p>
+												<p style="padding-bottom: 0px;">Datum: <%=s.getDate() %></p>
+												<p style="padding-bottom: 0px;">Čas: <%=s.getTime() %></p>
+											</li>
+											
+										<% } %>
+     				   					    
+     				   					<%    
+     				   					} catch (ParseException e) {
+     				   					    e.printStackTrace();
+     				   					}%>
+     				   				  <%}else{%>
+     				   				  		
+     				   				  		<li style="width: 200px;">
+												<p style="padding-bottom: 0px;">Mesto: <%=s.getCity() %></p>
+												<p style="padding-bottom: 0px;">Center: <%=s.getCenter() %></p>
+												<p style="padding-bottom: 0px;">Dvorana: <%=s.getTheater() %></p>
+												<p style="padding-bottom: 0px;">Datum: <%=s.getDate() %></p>
+												<p style="padding-bottom: 0px;">Čas: <%=s.getTime() %></p>
+											</li>
+											
+     				   				  
+     				   				  
+     							 	  <%} %>
+									
+									<%} %>
+									
+									
+									
+								<% } %>
+				</ul>
+				</div>
+				
+				<div id="ljubljana" class="tabcontent">
+				<ul class="portfolio clearfix">
+				  <% for (Show s:sh.selectShow()){ %>
+								<% int b = s.getMovieID(); %>
+									<%if(a == b){ %>
+									<%if(s.getCity().compareTo("Ljubljana")==0){ %>
+									<%	if(request.getParameter("showDate")!=null){ %>
+									<%  String dare = request.getParameter("showDate");  	
+     				   					String startDateString = "06/27/2007";
+     				   					DateFormat df = new SimpleDateFormat("yyyy-MM-dd"); 
+     				   					Date startDate;
+     				   					Date ena = s.getDate();
+     				   					
+     				   					try {
+     				   					    startDate = df.parse(dare);
+     				   					    String newDateString = df.format(startDate);
+     				   					    %>
+     				   					    
+     				   					    <%if(s.getDate().compareTo(startDate)==0){ %>
+											
+											<li style="width: 200px;">
+												<p style="padding-bottom: 0px;">Mesto: <%=s.getCity() %></p>
+												<p style="padding-bottom: 0px;">Center: <%=s.getCenter() %></p>
+												<p style="padding-bottom: 0px;">Dvorana: <%=s.getTheater() %></p>
+												<p style="padding-bottom: 0px;">Datum: <%=s.getDate() %></p>
+												<p style="padding-bottom: 0px;">Čas: <%=s.getTime() %></p>
+											</li>
+											
+										<% } %>
+     				   					    
+     				   					<%    
+     				   					} catch (ParseException e) {
+     				   					    e.printStackTrace();
+     				   					}%>
+     				   				  <%}else{%>
+     				   				  
+     				   				  		<li style="width: 200px;">
+												<p style="padding-bottom: 0px;">Mesto: <%=s.getCity() %></p>
+												<p style="padding-bottom: 0px;">Center: <%=s.getCenter() %></p>
+												<p style="padding-bottom: 0px;">Dvorana: <%=s.getTheater() %></p>
+												<p style="padding-bottom: 0px;">Datum: <%=s.getDate() %></p>
+												<p style="padding-bottom: 0px;">Čas: <%=s.getTime() %></p>
+											</li>
+     				   				  
+     				   				  
+     							 	  <%} %>
+									<%} %>
+									<%} %>
+									
+									
+									
+								<% } %>
+				</ul>
+				</div>
+				
+				<div id="kranj" class="tabcontent">
+				<ul class="portfolio clearfix">
+				  <% for (Show s:sh.selectShow()){ %>
+								<% int b = s.getMovieID(); %>
+									<%if(a == b){ %>
+									<%if(s.getCity().compareTo("Kranj")==0){ %>
+									<%	if(request.getParameter("showDate")!=null){ %>
+									<%  String dare = request.getParameter("showDate");  	
+     				   					String startDateString = "06/27/2007";
+     				   					DateFormat df = new SimpleDateFormat("yyyy-MM-dd"); 
+     				   					Date startDate;
+     				   					Date ena = s.getDate();
+     				   					
+     				   					try {
+     				   					    startDate = df.parse(dare);
+     				   					    String newDateString = df.format(startDate);
+     				   					    %>
+     				   					    
+     				   					    <%if(s.getDate().compareTo(startDate)==0){ %>
+											
+											<li style="width: 200px;">
+												<p style="padding-bottom: 0px;">Mesto: <%=s.getCity() %></p>
+												<p style="padding-bottom: 0px;">Center: <%=s.getCenter() %></p>
+												<p style="padding-bottom: 0px;">Dvorana: <%=s.getTheater() %></p>
+												<p style="padding-bottom: 0px;">Datum: <%=s.getDate() %></p>
+												<p style="padding-bottom: 0px;">Čas: <%=s.getTime() %></p>
+											</li>
+											
+										<% } %>
+     				   					    
+     				   					<%    
+     				   					} catch (ParseException e) {
+     				   					    e.printStackTrace();
+     				   					}%>
+     				   				  <%}else{%>
+     				   				  
+     				   				  		<li style="width: 200px;">
+												<p style="padding-bottom: 0px;">Mesto: <%=s.getCity() %></p>
+												<p style="padding-bottom: 0px;">Center: <%=s.getCenter() %></p>
+												<p style="padding-bottom: 0px;">Dvorana: <%=s.getTheater() %></p>
+												<p style="padding-bottom: 0px;">Datum: <%=s.getDate() %></p>
+												<p style="padding-bottom: 0px;">Čas: <%=s.getTime() %></p>
+											
+     				   				  
+     				   				  
+     							 	  <%} %>
+									<%} %>
+									<%} %>
+									
+									
+									
+								<% } %> 
+				</ul>
+				</div>
+
+
+
+				<script>
+				function openCity(evt, cityName) {
+				    var i, tabcontent, tablinks;
+				    tabcontent = document.getElementsByClassName("tabcontent");
+				    for (i = 0; i < tabcontent.length; i++) {
+				        tabcontent[i].style.display = "none";
+				    }
+				    tablinks = document.getElementsByClassName("tablinks");
+				    for (i = 0; i < tablinks.length; i++) {
+				        tablinks[i].className = tablinks[i].className.replace(" active", "");
+				    }
+				    document.getElementById(cityName).style.display = "block";
+				    evt.currentTarget.className += " active";
+				}
+				
+				// Get the element with id="defaultOpen" and click on it
+				document.getElementById("defaultOpen").click();
+				</script>
+     				
+     				
+     				
+     				
+							
+								
+								
+								
+								
+							
+     		
+     				
+     				
+              		
+          		<br>
+            	</article>
+            	<article class="span4">
+            	
+            	
+            	
+            	
+            	<h3>Informacije:</h3>
+                	<div class="wrapper">
+                    	<ul >
+                    	<%String voljo = "" + o.isNa_voljo();
+                    	String rez = "";
+                    		if(o.isNa_voljo()==true)
+                    			rez = "da";
+                    		else
+                    			rez = "ne";
+                    			%>
+                    	
+                          <li><h5>Dolžina: <%=o.getDuration()%> minut</h5></li>
+                          <li><h5>Leto: <%=o.getYear()%></h5></li>
+                          <li><h5>Država: <%=o.getCountry()%></h5></li>
+                          <li><h5>Jezik: <%=o.getLanguage()%></h5></li>
+                          <li><h5>Scenarij: <%=o.getWriter()%></h5></li>
+                          <li><h5>Režija: <%=o.getDirector()%></h5></li>
+                          <li><h5>Igrajo: <%=o.getCast()%></h5></li>
+                          <li><h5>Na voljo: <%=rez%></h5></li>
+                          
+                        </ul>
+                        <br />
+                        <form action="${pageContext.request.contextPath}/IzvoziVXML" method="post">
+							<input type="submit" class="btn btn-1" value="Izvozi v XML" />
+							<input type="hidden" name="idFilma" value="<%=o.getBazniID()%>"/>
+						</form>
+                    </div>
+            	
+            
+            	
+            	<% if ((session.getAttribute("email") == null) || ((String) session.getAttribute("email") == "")) {
+				%>
+            	<%}else{ %>
+            	<%String email = (String) session.getAttribute("email"); %>
+            	
+            	
+            	Komentar:<div class="buttons-wrapper">
+						<form action="film.jsp?poslji=<%=o.getBazniID() %>" method="post" id="usrform">
+						<textarea id="textarea" style="resize:none;" rows="4" cols="50" name="comment" form="usrform" maxlength="99"></textarea>
+						<div id="textarea_feedback"></div>
+						<input type="hidden" name="movie" value="<%=o.getBazniID()%>">
+						<input type="hidden" name="email" value="<%=(String) session.getAttribute("email")%>"><br>
+						<input class="btn btn-1" type="submit" name="vnosC" value="Shrani">
+						</form>
+            	 </div>
+            	
+            	
+            	<%} %>
+            	<% 
+            	for( Comment c:cm.selectComment()){%>
+            		<% if(o.getBazniID()==c.getMoviesID()){%>
+            			<% for(User u:us.selectUser()) {%>
+            				<%if(c.getUsersID()==u.getUserID()){ %>
+            				— <%=u.getFirst_name()%> <%=u.getLast_name()%><br><br>
+            				<% String vsebina = c.getContent();
+            					String parsedStr = vsebina.replaceAll("(.{40})", "$1\n");%>
+            					     <c:set var = "parsedStr1" value = "<%=parsedStr %>"/>
+     									${fn:escapeXml(parsedStr1)}
+
+            				<% int user2=0;
+            				if(session.getAttribute("email")!=null) {
+            		    		if(u.getEmail().compareTo((String) session.getAttribute("email"))==0){
+            		    			user2 = u.getUserID();
+            		    		}
+            				}
+            		    	//System.out.print(user2);
+            				if((c.getUsersID()==user2)||(u.getEmail().compareTo("admin@kolosej.si")==0)){
+            				
+            				%>
+            				<div class="buttons-wrapper">
+            				<form action="film.jsp?poslji=<%=o.getBazniID() %>" method="post" id="usrform2"><br>
+            				<input class="btn btn-1" type="hidden" name="izbrisi1" value="<%=c.getCommentID()%>">
+            				<%if ((session.getAttribute("email") != null)) {
+            						if((((String) session.getAttribute("email")).compareTo("")!=0)&&((((String) session.getAttribute("email")).compareTo("admin@kolosej.si")==0)||(((String) session.getAttribute("email")).compareTo(u.getEmail())==0))) {%><input class="btn btn-1" type="submit" name="izbrisi" value="Briši"><%}} %>
+            				</form>
+            				</div> 
+            				<%}%>
+            				<hr>
+            				<%}%>
+            			<%}%>
+            		<%}%>
+            		
+            	<%}%>
+            	</article>
+        		
+     			</div>
+        	</div>
+      	</div>
+      </div>
+      <% } %>
+      <% } %>
+<%@include file="footer.jsp"%>

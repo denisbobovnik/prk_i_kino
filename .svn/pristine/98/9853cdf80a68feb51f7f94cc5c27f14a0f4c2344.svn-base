@@ -1,0 +1,42 @@
+package si.um.feri.praktikum;
+
+import java.sql.Timestamp;
+
+public class Glasovanje {
+	private int IDglasovanje, IDfilma;
+	String film;
+	private Timestamp datum;
+	public Glasovanje() {
+	}
+	
+	public Glasovanje(int IDglasovanje, int IDfilma, String film, Timestamp datum) {
+		this.IDglasovanje=IDglasovanje;
+		this.IDfilma=IDfilma;
+		this.film=film;
+		this.datum=datum;
+	}
+	
+	
+
+
+	public String getFilm() {
+		return film;
+	}
+
+	public void setFilm(String film) {
+		this.film = film;
+	}
+
+	public Timestamp getDatum() {
+		return datum;
+	}
+	public void setDatum(Timestamp datum) {
+		this.datum = datum;
+	}
+	
+	@Override
+	public String toString() {
+		return "Movie [IDbaza=" + IDglasovanje + ", ime=" + film + ", datum=" + datum + "]";
+	}
+	
+}
